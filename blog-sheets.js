@@ -9,7 +9,7 @@
  * 5. Xoá dòng <script src="../blog-data.js"> trong 3 file index.html
  */
 
-const SHEETS_URL = "PASTE_YOUR_APPS_SCRIPT_URL_HERE";
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbxjsfjxfX3wBDGTEe6p8QplbJpo2k9Rrptz5S0odz9ioCquW-F2u0tSeMEOcs-gAB5a/exec";
 
 function loadFromSheets(renderFn) {
   if (!SHEETS_URL || SHEETS_URL.includes("PASTE_YOUR")) {
