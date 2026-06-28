@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       cursor.before(chars[i] === "\n" ? document.createElement("br") : document.createTextNode(chars[i]));
       i++;
-    }, 30);
+    }, 18);
   }
 
   // ── 4. Scroll reveal cho blog cards ─────────────────────
