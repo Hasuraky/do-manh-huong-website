@@ -73,6 +73,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
     revealEls.forEach(el => io.observe(el));
   }
+  // Force reveal elements đã trong viewport ngay khi load (trang ngắn như Myself)
+  setTimeout(() => {
+    document.querySelectorAll(".reveal-on-scroll:not(.revealed)").forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        el.classList.add("revealed");
+      }
+    });
+  }, 100);
 
   // ── 5. Hover scale trên ảnh blog ─────────────────────────
   // Handled by CSS — không cần JS
