@@ -1,5 +1,5 @@
 
-body { overflow: hidden; min-height: 100vh; }
+body { min-height: 100vh; }
 .tomo-bg {
   position: fixed; inset: 0; z-index: -1;
   background: #050f08;
