@@ -120,6 +120,15 @@
     console.log("blog-render: rendering", data.length, "entries");
     container.innerHTML = data.map(entry => renderEntry(entry)).join("\n");
     document.dispatchEvent(new Event("blog-rendered"));
+
+    // Force reveal sau khi render (Sheets fetch xong sau khi observer đã chạy)
+    setTimeout(() => {
+      container.querySelectorAll(".reveal-on-scroll").forEach(el => {
+        if (window._blogRevealIO) window._blogRevealIO.observe(el);
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) el.classList.add("revealed");
+      });
+    }, 100);
   };
 
   // ── Fallback: nếu sau 5 giây vẫn chưa có data → dùng local ──
