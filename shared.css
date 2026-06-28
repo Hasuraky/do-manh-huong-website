@@ -198,15 +198,23 @@ body.page-exit {
 @keyframes blink { 50% { opacity: 0; } }
 
 /* ── Scroll reveal ── */
-.reveal-on-scroll {
+/* Chỉ ẩn khi nằm trong .blog-entries — trang khác (Myself, Short film...) không bị ảnh hưởng */
+.blog-entries .reveal-on-scroll {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity .55s cubic-bezier(.22,1,.36,1),
               transform .55s cubic-bezier(.22,1,.36,1);
 }
-.reveal-on-scroll.revealed {
+.blog-entries .reveal-on-scroll.revealed {
   opacity: 1;
   transform: translateY(0);
+}
+/* Các trang khác: reveal ngay, không delay */
+.myself-section .reveal-on-scroll,
+.film-home .reveal-on-scroll,
+.tomo-content .reveal-on-scroll {
+  opacity: 1;
+  transform: none;
 }
 
 /* Stagger delays untuk children */
