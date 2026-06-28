@@ -129,15 +129,6 @@
     });
   };
 
-  // ── Fallback: nếu sau 5 giây vẫn chưa có data → dùng local ──
-  setTimeout(function() {
-    const container = document.querySelector(".blog-entries");
-    if (container && container.innerHTML.trim() === "") {
-      console.warn("blog-render: timeout, thử dùng dữ liệu local");
-      if (typeof BLOG_DATA !== "undefined") {
-        window.blogRender(BLOG_DATA);
-      }
-    }
-  }, 5000);
+
 
 })();
