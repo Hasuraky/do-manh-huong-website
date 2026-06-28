@@ -121,13 +121,12 @@
     container.innerHTML = data.map(entry => renderEntry(entry)).join("\n");
     document.dispatchEvent(new Event("blog-rendered"));
 
-    // Force reveal tất cả entries — Sheets fetch xong sau khi observer đã chạy rồi
-    // nên không dùng IntersectionObserver được, phải add class trực tiếp
-    setTimeout(() => {
+    // Force reveal tất cả entries ngay lập tức, không chờ typewriter
+    requestAnimationFrame(() => {
       container.querySelectorAll(".reveal-on-scroll").forEach(el => {
         el.classList.add("revealed");
       });
-    }, 200);
+    });
   };
 
   // ── Fallback: nếu sau 5 giây vẫn chưa có data → dùng local ──
