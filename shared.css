@@ -246,13 +246,14 @@ body.page-exit {
 
 .lb-overlay {
   position: fixed; inset: 0; z-index: 300;
-  display: flex; align-items: center; justify-content: center;
+  display: none; align-items: center; justify-content: center;
   background: rgba(0,0,0,0);
   pointer-events: none;
   transition: background .3s ease;
   outline: none;
 }
 .lb-overlay.lb-open {
+  display: flex;
   background: rgba(0,0,0,.88);
   pointer-events: auto;
 }
