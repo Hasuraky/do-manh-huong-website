@@ -7,6 +7,27 @@ const SHEETS_URL = "https://script.google.com/macros/s/AKfycbz1-cur6QuOOVRG7iGqw
 (function () {
   if (!SHEETS_URL) return;
 
+  // ── Hiện skeleton ngay lập tức trong lúc chờ Sheets ──────
+  function showSkeleton() {
+    const container = document.querySelector(".blog-entries");
+    if (!container) return;
+    const skeletonHTML = Array(3).fill(`
+      <div class="blog-skeleton revealed">
+        <div class="bs-text"></div>
+        <div class="bs-meta"></div>
+        <div class="bs-img"></div>
+      </div>
+    `).join("");
+    container.innerHTML = skeletonHTML;
+  }
+
+  // Hiện skeleton ngay sau khi DOM ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", showSkeleton);
+  } else {
+    showSkeleton();
+  }
+
   const lang = document.documentElement.lang || "en";
 
   fetch(`${SHEETS_URL}?lang=${lang}`)
@@ -15,32 +36,18 @@ const SHEETS_URL = "https://script.google.com/macros/s/AKfycbz1-cur6QuOOVRG7iGqw
       return r.json();
     })
     .then(data => {
-      if (!Array.isArray(data) || !data.length) {
-        throw new Error("Data rỗng");
-      }
+      if (!Array.isArray(data) || !data.length) throw new Error("Data rỗng");
       console.log("blog-sheets: load OK,", data.length, "entries");
-
-      // Gọi render — thử ngay, nếu chưa có thì đợi
       function tryRender() {
-        if (typeof window.blogRender === "function") {
-          window.blogRender(data);
-        } else {
-          setTimeout(tryRender, 50);
-        }
+        if (typeof window.blogRender === "function") { window.blogRender(data); }
+        else { setTimeout(tryRender, 50); }
       }
       tryRender();
     })
     .catch(err => {
       console.error("blog-sheets: lỗi fetch:", err);
-      // Fallback: đợi blog-render.js rồi dùng local data
-      function tryFallback() {
-        if (typeof window.blogRender === "function" && typeof BLOG_DATA !== "undefined") {
-          console.warn("blog-sheets: dùng dữ liệu local");
-          window.blogRender(BLOG_DATA);
-        } else {
-          setTimeout(tryFallback, 50);
-        }
-      }
-      tryFallback();
+      // Xóa skeleton nếu lỗi
+      const container = document.querySelector(".blog-entries");
+      if (container) container.innerHTML = "";
     });
 })();
