@@ -197,6 +197,24 @@ body.page-exit {
 }
 @keyframes blink { 50% { opacity: 0; } }
 
+/* ── Skeleton loading ── */
+.blog-skeleton {
+  width: min(1140px, calc(100vw - 32px));
+  background: #eee;
+  border-radius: 20px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bs-text  { height: 16px; width: 70%; background: #d8d8d8; border-radius: 6px; animation: shimmer 1.2s ease-in-out infinite; }
+.bs-meta  { height: 12px; width: 35%; background: #d8d8d8; border-radius: 6px; animation: shimmer 1.2s ease-in-out infinite .15s; }
+.bs-img   { height: 340px; background: #d8d8d8; border-radius: 10px; animation: shimmer 1.2s ease-in-out infinite .3s; }
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
 /* ── Scroll reveal ── */
 /* Chỉ ẩn khi nằm trong .blog-entries — trang khác (Myself, Short film...) không bị ảnh hưởng */
 .blog-entries .reveal-on-scroll {
