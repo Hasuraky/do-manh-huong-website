@@ -1,18 +1,11 @@
 /**
  * blog-sheets.js — fetch data từ Google Sheets AppScript
- * Load TRƯỚC blog-render.js trong HTML
  */
 
 const SHEETS_URL = "https://script.google.com/macros/s/AKfycbxjsfjxfX3wBDGTEe6p8QplbJpo2k9Rrptz5S0odz9ioCquW-F2u0tSeMEOcs-gAB5a/exec";
 
-// Cờ để blog-render.js biết đang chờ Sheets
-window._sheetsLoading = true;
-
 (function () {
-  if (!SHEETS_URL) {
-    window._sheetsLoading = false;
-    return;
-  }
+  if (!SHEETS_URL) return;
 
   const lang = document.documentElement.lang || "en";
 
@@ -23,25 +16,31 @@ window._sheetsLoading = true;
     })
     .then(data => {
       if (!Array.isArray(data) || !data.length) {
-        throw new Error("Data rỗng hoặc sai format");
+        throw new Error("Data rỗng");
       }
       console.log("blog-sheets: load OK,", data.length, "entries");
-      window._sheetsLoading = false;
-      // Gọi render nếu blog-render.js đã sẵn sàng
-      if (typeof window.blogRender === "function") {
-        window.blogRender(data);
-      } else {
-        // blog-render.js chưa load xong, lưu data lại để nó tự lấy
-        window._sheetsData = data;
+
+      // Gọi render — thử ngay, nếu chưa có thì đợi
+      function tryRender() {
+        if (typeof window.blogRender === "function") {
+          window.blogRender(data);
+        } else {
+          setTimeout(tryRender, 50);
+        }
       }
+      tryRender();
     })
     .catch(err => {
       console.error("blog-sheets: lỗi fetch:", err);
-      window._sheetsLoading = false;
-      // Fallback về blog-data.js local
-      if (typeof window.blogRender === "function" && typeof BLOG_DATA !== "undefined") {
-        console.warn("blog-sheets: dùng dữ liệu local (blog-data.js)");
-        window.blogRender(BLOG_DATA);
+      // Fallback: đợi blog-render.js rồi dùng local data
+      function tryFallback() {
+        if (typeof window.blogRender === "function" && typeof BLOG_DATA !== "undefined") {
+          console.warn("blog-sheets: dùng dữ liệu local");
+          window.blogRender(BLOG_DATA);
+        } else {
+          setTimeout(tryFallback, 50);
+        }
       }
+      tryFallback();
     });
 })();

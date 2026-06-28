@@ -1,6 +1,6 @@
 /**
  * blog-render.js — render blog entries ra trang
- * Ưu tiên data từ Sheets, fallback về blog-data.js local.
+ * KHÔNG tự fetch data — chờ blog-sheets.js gọi window.blogRender(data)
  */
 (function () {
   const LANG     = document.documentElement.lang || "en";
@@ -9,7 +9,6 @@
   const HINT = { en: "← swipe →", vi: "← vuốt →", ja: "← スワイプ →" };
   const hint = HINT[LANG] || HINT.en;
 
-  // ── Tỷ lệ → class CSS ──────────────────────────────────────
   const RATIO_CLASS = {
     "1:1": "ar-1x1", "3:4": "ar-3x4", "4:3": "ar-4x3",
     "9:16": "ar-9x16", "16:9": "ar-16x9", "21:9": "ar-21x9",
@@ -111,43 +110,27 @@
     </article>`;
   }
 
-  function render(data) {
+  // ── Hàm render chính — được gọi từ blog-sheets.js ────────
+  window.blogRender = function(data) {
     const container = document.querySelector(".blog-entries");
-    if (!container) return;
+    if (!container) {
+      console.warn("blog-render: không tìm thấy .blog-entries");
+      return;
+    }
+    console.log("blog-render: rendering", data.length, "entries");
     container.innerHTML = data.map(entry => renderEntry(entry)).join("\n");
     document.dispatchEvent(new Event("blog-rendered"));
-  }
+  };
 
-  // Export để blog-sheets.js dùng
-  window.blogRender = render;
-
-  // ── Init: chờ Sheets, hoặc dùng local data ────────────────
-  function init() {
-    // Nếu Sheets đã fetch xong và có data → render ngay
-    if (window._sheetsData) {
-      render(window._sheetsData);
-      return;
+  // ── Fallback: nếu sau 5 giây vẫn chưa có data → dùng local ──
+  setTimeout(function() {
+    const container = document.querySelector(".blog-entries");
+    if (container && container.innerHTML.trim() === "") {
+      console.warn("blog-render: timeout, thử dùng dữ liệu local");
+      if (typeof BLOG_DATA !== "undefined") {
+        window.blogRender(BLOG_DATA);
+      }
     }
-
-    // Nếu Sheets đang fetch → chờ nó, render sẽ được gọi từ blog-sheets.js
-    if (window._sheetsLoading) {
-      console.log("blog-render: đang chờ Sheets...");
-      return;
-    }
-
-    // Không có Sheets → dùng local BLOG_DATA
-    if (typeof BLOG_DATA !== "undefined") {
-      console.log("blog-render: dùng dữ liệu local");
-      render(BLOG_DATA);
-    } else {
-      console.warn("blog-render: không có data source nào!");
-    }
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
+  }, 5000);
 
 })();
