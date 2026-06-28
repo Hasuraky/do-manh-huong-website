@@ -86,20 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ── 5. Hover scale trên ảnh blog ─────────────────────────
   // Handled by CSS — không cần JS
 
-  // ── 6. Page fade transition ──────────────────────────────
-  document.querySelectorAll("a[href]").forEach(link => {
-    const href = link.getAttribute("href");
-    // Chỉ apply cho internal links (không phải #, mailto, target=_blank, youtube)
-    if (!href || href.startsWith("#") || href.startsWith("mailto") || href.startsWith("http") || link.getAttribute("target") === "_blank") return;
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      document.body.classList.add("page-exit");
-      setTimeout(() => { window.location.href = href; }, 320);
-    });
-  });
-  // Fade in khi vào trang
-  document.body.classList.add("page-enter");
-  setTimeout(() => document.body.classList.remove("page-enter"), 400);
+  // ── 6. Page fade transition — đã tắt ─────────────────────
 });
 
 // ── 7. Gallery Lightbox với swipe + next/prev ─────────────
