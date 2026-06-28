@@ -1,17 +1,19 @@
 
-body { min-height: 100vh; }
+body { min-height: 100vh; display: flex; flex-direction: column; }
 .mangac-bg {
   position: fixed; inset: 0; z-index: -1;
   background-image: url("../image/MangaC/BigImage1.jpg");
   background-size: cover; background-position: center;
 }
 .mangac-bg::after { content:""; position:absolute; inset:0; background:rgba(0,0,0,.45); }
+main { flex: 1; position: relative; }
 .mangac-content {
-  position: absolute; top: 38%; left: 50%; transform: translate(-50%,-50%);
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
   max-width: 680px; width: 90%; text-align: left; color: #fff;
   padding: 0 24px; z-index: 1;
 }
 .mangac-content p  { color: #d6d6d6; font-size: 16px; line-height: 1.8; margin: 0 0 28px; }
 .mangac-content h1 { font-size: clamp(28px,5vw,48px); letter-spacing: .15em; font-weight: 400; }
-.site-footer { background: transparent; color: #fff; }
+.site-footer { background: transparent; color: #fff; position: relative; z-index: 1; }
 .footer__lang-link { color: #ccc; }
+.footer__divider { border-color: rgba(255,255,255,.2); }
