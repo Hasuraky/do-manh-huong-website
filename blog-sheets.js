@@ -1,34 +1,47 @@
 /**
- * blog-sheets.js — fetch data từ Google Sheets thay thế blog-data.js
- *
- * SETUP (làm 1 lần):
- * 1. Mở Google Sheets của bạn
- * 2. Extensions → Apps Script → paste code Apps Script (xem hướng dẫn)
- * 3. Deploy → Web App → Anyone can access
- * 4. Copy URL deploy, dán vào SHEETS_URL bên dưới
- * 5. Xoá dòng <script src="../blog-data.js"> trong 3 file index.html
+ * blog-sheets.js — fetch data từ Google Sheets AppScript
+ * Load TRƯỚC blog-render.js trong HTML
  */
 
 const SHEETS_URL = "https://script.google.com/macros/s/AKfycbxjsfjxfX3wBDGTEe6p8QplbJpo2k9Rrptz5S0odz9ioCquW-F2u0tSeMEOcs-gAB5a/exec";
 
-function loadFromSheets(renderFn) {
-  if (!SHEETS_URL || SHEETS_URL.includes("PASTE_YOUR")) {
-    console.warn("blog-sheets.js: chưa cấu hình SHEETS_URL, dùng blog-data.js local");
-    return; // fallback về blog-data.js
+// Cờ để blog-render.js biết đang chờ Sheets
+window._sheetsLoading = true;
+
+(function () {
+  if (!SHEETS_URL) {
+    window._sheetsLoading = false;
+    return;
   }
 
   const lang = document.documentElement.lang || "en";
 
   fetch(`${SHEETS_URL}?lang=${lang}`)
-    .then(r => r.json())
+    .then(r => {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
     .then(data => {
       if (!Array.isArray(data) || !data.length) {
-        throw new Error("Sheets trả về data rỗng");
+        throw new Error("Data rỗng hoặc sai format");
       }
-      renderFn(data);
+      console.log("blog-sheets: load OK,", data.length, "entries");
+      window._sheetsLoading = false;
+      // Gọi render nếu blog-render.js đã sẵn sàng
+      if (typeof window.blogRender === "function") {
+        window.blogRender(data);
+      } else {
+        // blog-render.js chưa load xong, lưu data lại để nó tự lấy
+        window._sheetsData = data;
+      }
     })
     .catch(err => {
-      console.error("blog-sheets.js: lỗi fetch Sheets, dùng blog-data.js local:", err);
-      if (typeof BLOG_DATA !== "undefined") renderFn(BLOG_DATA);
+      console.error("blog-sheets: lỗi fetch:", err);
+      window._sheetsLoading = false;
+      // Fallback về blog-data.js local
+      if (typeof window.blogRender === "function" && typeof BLOG_DATA !== "undefined") {
+        console.warn("blog-sheets: dùng dữ liệu local (blog-data.js)");
+        window.blogRender(BLOG_DATA);
+      }
     });
-}
+})();

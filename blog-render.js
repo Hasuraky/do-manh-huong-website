@@ -1,6 +1,6 @@
 /**
- * blog-render.js — render BLOG_DATA ra trang
- * Không cần sửa file này. Thêm layout mới = thêm function vào LAYOUTS.
+ * blog-render.js — render blog entries ra trang
+ * Ưu tiên data từ Sheets, fallback về blog-data.js local.
  */
 (function () {
   const LANG     = document.documentElement.lang || "en";
@@ -27,7 +27,6 @@
             <p class="be-meta"><time datetime="${dt}">${entry.date}</time>, ${entry.location}</p>`;
   }
 
-  // ── Scroll strip (ảnh thứ 5+) ─────────────────────────────
   function scrollStrip(imgs, direction) {
     if (!imgs || !imgs.length) return "";
     const isV = direction === "vertical";
@@ -40,7 +39,6 @@
     </div>`;
   }
 
-  // ── Video ─────────────────────────────────────────────────
   function videoBlock(entry) {
     const ratio = entry.videoRatio === "9:16" ? "9x16" : "16x9";
     return `<div class="be-video">
@@ -54,16 +52,7 @@
     </div>`;
   }
 
-  // ══════════════════════════════════════════════════════════
-  // LAYOUT RENDERERS
-  // Thêm layout mới: thêm function LAYOUTS["5"] = function(entry){...}
-  // entry.mainImages  = [{file, ratio}, ...]  — tối đa 4 ảnh lớn
-  // entry.moreImages  = [{file, ratio}, ...]  — ảnh thứ 5+
-  // entry.scrollDir   = "horizontal" | "vertical"
-  // ══════════════════════════════════════════════════════════
   const LAYOUTS = {
-
-    // Layout 1 — 1 ảnh full width
     "1": function (entry) {
       const [a] = entry.mainImages || [];
       return `<div class="bl-1">
@@ -72,8 +61,6 @@
         ${scrollStrip(entry.moreImages, entry.scrollDir)}
       </div>`;
     },
-
-    // Layout 2 — 2 ảnh cạnh nhau
     "2": function (entry) {
       const [a, b] = entry.mainImages || [];
       return `<div class="bl-2">
@@ -85,8 +72,6 @@
         ${scrollStrip(entry.moreImages, entry.scrollDir)}
       </div>`;
     },
-
-    // Layout 3 — 1 ảnh to trái + 2 ảnh nhỏ phải
     "3": function (entry) {
       const [a, b, c] = entry.mainImages || [];
       return `<div class="bl-3">
@@ -101,8 +86,6 @@
         ${scrollStrip(entry.moreImages, entry.scrollDir)}
       </div>`;
     },
-
-    // Layout 4 — 4 ảnh hàng ngang đều
     "4": function (entry) {
       const imgs = (entry.mainImages || []).slice(0, 4);
       return `<div class="bl-4">
@@ -113,20 +96,9 @@
         ${scrollStrip(entry.moreImages, entry.scrollDir)}
       </div>`;
     },
-
-    // Layout video — không có ảnh
     "video": videoBlock,
-
   };
 
-  // ── Parse data từ Google Sheets (flat row) → object ───────
-  function parseRow(row) {
-    // Sheets trả về mảng flat, blog-sheets.js map sang object này
-    // Nếu dùng blog-data.js local thì object đã đúng format rồi
-    return row;
-  }
-
-  // ── Render 1 entry ────────────────────────────────────────
   function renderEntry(entry) {
     const layout = String(entry.layout || "1");
     const fn = LAYOUTS[layout];
@@ -139,23 +111,36 @@
     </article>`;
   }
 
-  // ── Main render ───────────────────────────────────────────
   function render(data) {
     const container = document.querySelector(".blog-entries");
     if (!container) return;
-    container.innerHTML = data.map(row => renderEntry(parseRow(row))).join("\n");
+    container.innerHTML = data.map(entry => renderEntry(entry)).join("\n");
     document.dispatchEvent(new Event("blog-rendered"));
   }
 
-  // ── Entry point: ưu tiên Sheets, fallback local data ──────
+  // Export để blog-sheets.js dùng
+  window.blogRender = render;
+
+  // ── Init: chờ Sheets, hoặc dùng local data ────────────────
   function init() {
-    if (typeof loadFromSheets === "function") {
-      // blog-sheets.js sẽ fetch từ Google Sheets rồi gọi render()
-      loadFromSheets(render);
-    } else if (typeof BLOG_DATA !== "undefined") {
+    // Nếu Sheets đã fetch xong và có data → render ngay
+    if (window._sheetsData) {
+      render(window._sheetsData);
+      return;
+    }
+
+    // Nếu Sheets đang fetch → chờ nó, render sẽ được gọi từ blog-sheets.js
+    if (window._sheetsLoading) {
+      console.log("blog-render: đang chờ Sheets...");
+      return;
+    }
+
+    // Không có Sheets → dùng local BLOG_DATA
+    if (typeof BLOG_DATA !== "undefined") {
+      console.log("blog-render: dùng dữ liệu local");
       render(BLOG_DATA);
     } else {
-      console.warn("blog-render: no data source found");
+      console.warn("blog-render: không có data source nào!");
     }
   }
 
@@ -165,6 +150,4 @@
     init();
   }
 
-  // Export để blog-sheets.js dùng
-  window.blogRender = render;
 })();
