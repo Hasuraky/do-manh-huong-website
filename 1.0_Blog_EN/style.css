@@ -1,0 +1,117 @@
+/* ══════════════════════════════════════════
+   BLOG — base
+   ══════════════════════════════════════════ */
+.intro-text { padding: 40px 0 32px; }
+.intro-text__inner { max-width: var(--content-max); margin: 0 auto; padding: 0 24px; }
+.intro-text p { margin: 0; font-size: 18px; line-height: 1.8; }
+.intro-text__divider { margin: 24px auto 0; width: 90%; max-width: var(--content-max); border: none; border-top: 2px solid #03200a; }
+
+.blog-entries { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 0 0 60px; }
+
+.blog-entry {
+  background: #eee;
+  width: min(1140px, calc(100vw - 32px));
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 14px;
+}
+
+/* ── Text ── */
+.be-text { font-size: 16px; line-height: 1.75; text-align: justify; margin: 0 0 6px; color: #111; }
+.be-meta  { font-size: 13px; font-style: italic; font-weight: 700; color: #555; text-align: right; margin: 0 0 10px; }
+
+/* ── Images base ── */
+.blog-entry img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  border-radius: 10px;
+  user-select: none; -webkit-user-drag: none;
+}
+.blog-entry figure { margin: 0; border-radius: 10px; overflow: hidden; line-height: 0; }
+
+/* ── Aspect ratio helpers ── */
+.ar-1x1  { aspect-ratio: 1/1; }
+.ar-3x4  { aspect-ratio: 3/4; }
+.ar-4x3  { aspect-ratio: 4/3; }
+.ar-9x16 { aspect-ratio: 9/16; }
+.ar-16x9 { aspect-ratio: 16/9; }
+.ar-21x9 { aspect-ratio: 21/9; }
+
+/* ══════════════════════════════════════════
+   LAYOUT 1 — 1 ảnh full width
+   ══════════════════════════════════════════ */
+.bl-1 { display: flex; flex-direction: column; gap: 8px; }
+.bl-1__img { width: 100%; }
+
+/* ══════════════════════════════════════════
+   LAYOUT 2 — 2 ảnh cạnh nhau 50/50
+   ══════════════════════════════════════════ */
+.bl-2 { display: flex; flex-direction: column; gap: 8px; }
+.bl-2__imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+/* ══════════════════════════════════════════
+   LAYOUT 3 — 1 ảnh to trái + 2 ảnh nhỏ phải
+   ══════════════════════════════════════════ */
+.bl-3 { display: flex; flex-direction: column; gap: 8px; }
+.bl-3__imgs { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; }
+.bl-3__right { display: flex; flex-direction: column; gap: 8px; }
+.bl-3__right figure { flex: 1; }
+
+/* ══════════════════════════════════════════
+   LAYOUT 4 — 4 ảnh hàng ngang đều
+   ══════════════════════════════════════════ */
+.bl-4 { display: flex; flex-direction: column; gap: 8px; }
+.bl-4__imgs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+
+/* ══════════════════════════════════════════
+   SCROLL STRIP — ảnh thứ 5+
+   ══════════════════════════════════════════ */
+.be-scroll-wrap { position: relative; }
+.be-scroll {
+  display: flex; gap: 8px;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: thin; scrollbar-color: rgba(0,0,0,.15) transparent;
+  padding-bottom: 2px;
+}
+.be-scroll::-webkit-scrollbar { height: 3px; }
+.be-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,.15); border-radius: 2px; }
+.be-scroll figure { flex-shrink: 0; scroll-snap-align: start; }
+.be-scroll img { height: 220px; width: auto; border-radius: 10px; }
+
+/* Scroll dọc */
+.be-scroll-v {
+  display: flex; flex-direction: column; gap: 8px;
+  max-height: 560px; overflow-y: auto;
+  scrollbar-width: thin; scrollbar-color: rgba(0,0,0,.15) transparent;
+}
+.be-scroll-v figure { width: 100%; }
+.be-scroll-v img { width: 100%; height: auto; border-radius: 10px; }
+
+.be-scroll-hint {
+  font-size: 11px; color: #999; text-align: center;
+  letter-spacing: .06em; padding: 3px 0 0;
+}
+
+/* ══════════════════════════════════════════
+   VIDEO
+   ══════════════════════════════════════════ */
+.be-video { display: flex; flex-direction: column; gap: 8px; }
+.be-video__frame {
+  position: relative; width: 100%; border-radius: 12px; overflow: hidden;
+}
+.be-video__frame--16x9 { aspect-ratio: 16/9; }
+.be-video__frame--9x16 { aspect-ratio: 9/16; max-width: 360px; margin: 0 auto; }
+.be-video__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* ══════════════════════════════════════════
+   MOBILE < 768px
+   ══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .blog-entry { border-radius: 14px; padding: 10px; }
+  .bl-2__imgs { grid-template-columns: 1fr 1fr; }
+  .bl-3__imgs { grid-template-columns: 1fr; }
+  .bl-3__right { flex-direction: row; }
+  .bl-4__imgs { grid-template-columns: 1fr 1fr; }
+  .be-scroll img { height: 160px; }
+  .be-scroll-v { max-height: 400px; }
+}

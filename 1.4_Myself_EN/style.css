@@ -1,0 +1,37 @@
+
+.myself-section { max-width: 800px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 50px; padding: 0 16px 60px; }
+#huongdm { color: var(--color-green); }
+.work-exp h1 { color: var(--color-green); }
+.work-exp h3 { color: #323232; }
+.work-exp h4 { color: #575757; }
+.work-exp li { color: #575757; font-size: 16px; }
+.role { font-size: 12px; font-style: italic; }
+.cooperation { color: var(--color-green); }
+.base-info { margin-top: 30px; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.myself_image { margin: 0; }
+.base-info > .myself_image { border-radius: 20px; width: 380px; height: 700px; overflow: hidden; }
+.base-info > .myself_image img { width: 100%; height: 100%; object-fit: cover; }
+.base-info_main { width: 400px; display: flex; flex-direction: column; gap: 20px; }
+.base-info_name ul { list-style: none; padding: 0; margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+.base-info_name a { color: #111; }
+.base-info_skill { display: flex; flex-direction: column; gap: 10px; }
+.skill-group { display: flex; flex-direction: column; gap: 5px; }
+.skill-icons { margin-left: 20px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.myself_image-skill { margin: 0; width: 46px; height: 46px; overflow: hidden; border-radius: 5px; }
+.myself_image-skill img { width: 100%; height: 100%; object-fit: cover; }
+.myself_image-skill.wide { width: 47px; height: 35px; }
+#icon_capcut, #icon_blender { border: 1px solid var(--color-green); }
+.base-info_buttonCV { width: 100%; max-width: 347px; height: 36px; border-radius: 5px; background: #768479; border: 1px solid var(--color-green); display: flex; justify-content: center; align-items: center; }
+.base-info_buttonCV a { color: #fff; text-decoration: none; font-size: 14px; }
+.work-exp { display: flex; flex-direction: column; gap: 20px; }
+.work-exp_item { display: flex; flex-direction: column; gap: 5px; }
+.work-exp_teky-project { margin-left: 15px; margin-top: 5px; }
+.cooperation-side { margin-left: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+.cooperation-image { margin: 0; width: 120px; height: 120px; overflow: hidden; }
+.cooperation-image img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 700px) {
+  .base-info { flex-direction: column; align-items: center; }
+  .base-info > .myself_image { width: 100%; max-width: 380px; height: 400px; }
+  .base-info_main { width: 100%; }
+  .cooperation-image { width: 90px; height: 90px; }
+}

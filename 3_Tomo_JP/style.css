@@ -1,0 +1,14 @@
+
+body { overflow: hidden; min-height: 100vh; }
+.tomo-bg {
+  position: fixed; inset: 0; z-index: -1;
+  background: #050f08;
+}
+.tomo-content {
+  position: absolute; top: 38%; left: 50%; transform: translate(-50%,-50%);
+  max-width: 680px; width: 90%; text-align: left; color: #fff;
+  padding: 0 24px;
+}
+.tomo-content h3 { font-size: 13px; letter-spacing: .25em; text-transform: uppercase; color: rgba(213,133,72,.8); margin-bottom: 16px; font-weight: 400; }
+.tomo-content p  { color: #c8c8c8; font-size: 16px; line-height: 1.8; margin: 0 0 28px; }
+.tomo-content h1 { font-size: clamp(28px,5vw,48px); letter-spacing: .15em; font-weight: 400; color: #fff; }
