@@ -104,33 +104,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ── 7. Gallery Lightbox với swipe + next/prev ─────────────
 (function setupLightbox() {
-  // Tập hợp ảnh theo blog entry (article.blog-entry)
-  // Mỗi article là 1 gallery độc lập
-  // Nếu không có article cha → dùng toàn bộ main
 
-  const EXCLUDED = ":not(.hero-banner__image):not(.no-zoom):not(.myself_image-skill img):not(.cooperation-image img)";
-  const allImgs  = Array.from(document.querySelectorAll(`main img${EXCLUDED}`)).filter(img => {
-    // Bỏ icon và ảnh avatar nhỏ
-    const w = img.naturalWidth || img.width;
-    return !img.closest(".base-info_name") && !img.closest(".myself_image-skill") && !img.closest(".cooperation-image");
-  });
+  const EXCLUDED = ":not(.hero-banner__image):not(.no-zoom)";
 
-  if (!allImgs.length) return;
-
-  // Build gallery groups: nhóm theo article.blog-entry hoặc article.film-section
-  function getGroup(img) {
-    const article = img.closest("article, .film-section");
-    if (article) return allImgs.filter(i => article.contains(i));
-    return allImgs;
-  }
-
-  // ── Build overlay ────────────────────────────────────────
+  // ── Build overlay (1 lần duy nhất) ───────────────────────
   const overlay = document.createElement("div");
   overlay.className = "lb-overlay";
   overlay.setAttribute("aria-modal","true");
   overlay.setAttribute("role","dialog");
   overlay.setAttribute("aria-label","Image viewer");
-
   overlay.innerHTML = `
     <button class="lb-close" aria-label="Close">✕</button>
     <button class="lb-prev" aria-label="Previous image">‹</button>
@@ -154,10 +136,25 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentIdx   = 0;
   let isOpen       = false;
 
+  // ── Lấy danh sách ảnh hiện tại (gọi mỗi lần open) ───────
+  function getAllImgs() {
+    return Array.from(document.querySelectorAll(`main img${EXCLUDED}`)).filter(img => {
+      return !img.closest(".base-info_name") && !img.closest(".myself_image-skill") && !img.closest(".cooperation-image");
+    });
+  }
+
+  function getGroup(img) {
+    const allImgs = getAllImgs();
+    const article = img.closest("article, .film-section");
+    if (article) return allImgs.filter(i => article.contains(i));
+    return allImgs;
+  }
+
   // ── Open / close ─────────────────────────────────────────
   function open(img) {
     currentGroup = getGroup(img);
     currentIdx   = currentGroup.indexOf(img);
+    if (currentIdx === -1) { currentGroup = [img]; currentIdx = 0; }
     isOpen       = true;
     overlay.classList.add("lb-open");
     document.body.style.overflow = "hidden";
@@ -177,38 +174,26 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderSlide(idx, dir) {
     const img = currentGroup[idx];
     if (!img) return;
-
-    // Animate out
     if (dir !== "none") {
       lbImg.classList.add(dir === "next" ? "lb-exit-left" : "lb-exit-right");
     }
-
     setTimeout(() => {
       lbImg.classList.remove("lb-exit-left","lb-exit-right","lb-enter-right","lb-enter-left");
       lbImg.src = img.src;
       lbImg.alt = img.alt || "";
-
       if (dir !== "none") {
         lbImg.classList.add(dir === "next" ? "lb-enter-right" : "lb-enter-left");
         requestAnimationFrame(() => {
           requestAnimationFrame(() => lbImg.classList.remove("lb-enter-right","lb-enter-left"));
         });
       }
-
-      // Counter
       const total = currentGroup.length;
       lbCounter.textContent = total > 1 ? `${idx + 1} / ${total}` : "";
-
-      // Dots
       lbDots.querySelectorAll(".lb-dot").forEach((d, i) => d.classList.toggle("lb-dot--active", i === idx));
-
-      // Buttons visibility
       lbPrev.style.opacity = idx === 0 ? "0.25" : "1";
       lbPrev.style.pointerEvents = idx === 0 ? "none" : "auto";
       lbNext.style.opacity = idx === currentGroup.length - 1 ? "0.25" : "1";
       lbNext.style.pointerEvents = idx === currentGroup.length - 1 ? "none" : "auto";
-
-      // Hide nav if only 1 image
       const showNav = total > 1;
       lbPrev.style.display = showNav ? "" : "none";
       lbNext.style.display = showNav ? "" : "none";
@@ -230,21 +215,14 @@ document.addEventListener("DOMContentLoaded", () => {
   lbClose.addEventListener("click", close);
   lbPrev.addEventListener("click", prev);
   lbNext.addEventListener("click", next);
-
-  overlay.addEventListener("click", e => {
-    if (e.target === overlay) close();
-  });
-
+  overlay.addEventListener("click", e => { if (e.target === overlay) close(); });
   document.addEventListener("keydown", e => {
     if (!isOpen) return;
-    if (e.key === "Escape")      close();
-    if (e.key === "ArrowLeft")   prev();
-    if (e.key === "ArrowRight")  next();
+    if (e.key === "Escape")     close();
+    if (e.key === "ArrowLeft")  prev();
+    if (e.key === "ArrowRight") next();
   });
-
-  // Touch / swipe
-  let touchStartX = 0;
-  let touchStartY = 0;
+  let touchStartX = 0, touchStartY = 0;
   overlay.addEventListener("touchstart", e => {
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
@@ -252,20 +230,27 @@ document.addEventListener("DOMContentLoaded", () => {
   overlay.addEventListener("touchend", e => {
     const dx = e.changedTouches[0].clientX - touchStartX;
     const dy = e.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
-      dx < 0 ? next() : prev();
-    } else if (dy > 80 && Math.abs(dx) < 40) {
-      close(); // swipe down to close
-    }
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
+    else if (dy > 80 && Math.abs(dx) < 40) { close(); }
   }, { passive: true });
 
-  // ── Gắn click vào từng ảnh ───────────────────────────────
-  allImgs.forEach(img => {
-    // Bỏ qua ảnh trang Myself (skills, portrait) trên trang non-blog
+  // ── Gắn click — dùng event delegation trên main ──────────
+  // Hoạt động với cả ảnh tĩnh và ảnh được inject sau (blog entries)
+  document.addEventListener("click", e => {
+    const img = e.target.closest(`main img${EXCLUDED}`);
+    if (!img) return;
     if (img.closest(".myself_image-skill") || img.closest(".cooperation-image")) return;
-    img.style.cursor = "zoom-in";
-    img.addEventListener("click", () => open(img));
+    open(img);
   });
+
+  // ── Cursor zoom-in — gắn khi attach ──────────────────────
+  window._attachLightbox = function() {
+    document.querySelectorAll(`main img${EXCLUDED}`).forEach(img => {
+      if (img.closest(".myself_image-skill") || img.closest(".cooperation-image")) return;
+      img.style.cursor = "zoom-in";
+    });
+  };
+  window._attachLightbox();
 
 })();
 
