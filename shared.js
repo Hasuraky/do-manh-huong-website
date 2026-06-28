@@ -62,15 +62,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // ── 4. Scroll reveal cho blog cards ─────────────────────
   const revealEls = document.querySelectorAll(".reveal-on-scroll");
   if (revealEls.length) {
-    window._blogRevealIO = new IntersectionObserver((entries) => {
-    const io = window._blogRevealIO;
+    const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add("revealed");
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    }, { threshold: 0, rootMargin: "0px" });
+    window._blogRevealIO = io;
     revealEls.forEach(el => io.observe(el));
   }
   // Force reveal elements đã trong viewport ngay khi load (trang ngắn như Myself)
