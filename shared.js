@@ -296,8 +296,14 @@ function initAutoScroll() {
     let isPaused = false;
 
     function getOffset(fig) {
-      // Tính offset của figure so với track (không phải document)
-      return fig.offsetLeft - track.offsetLeft;
+      // Tính bằng tổng chiều rộng các figure trước đó + gap
+      let offset = 0;
+      const gap = 8;
+      for (let i = 0; i < figures.length; i++) {
+        if (figures[i] === fig) break;
+        offset += figures[i].offsetWidth + gap;
+      }
+      return offset;
     }
 
     function scrollToIdx(idx) {
