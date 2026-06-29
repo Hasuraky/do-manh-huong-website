@@ -196,15 +196,26 @@
 .be-video__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
 /* ══════════════════════════════════════════
-   LAYOUT 10 — Text + 1 slot lớn trên + 6 slot nhỏ dưới (2 hàng x 3)
+   LAYOUT 10 — Text + 1 slot lớn trên + 6 slot nhỏ dưới (1 hàng ngang)
    ══════════════════════════════════════════ */
 .bl-10 { display: flex; flex-direction: column; gap: 8px; }
 .bl-10__top { width: 100%; }
-.bl-10__bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-
-@media (max-width: 768px) {
-  .bl-10__bottom { grid-template-columns: 1fr 1fr; }
+.bl-10__bottom {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
+.bl-10__bottom::-webkit-scrollbar { display: none; }
+.bl-10__bottom .be-slot {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  width: calc((100% - 5 * 8px) / 3); /* Hiển thị 3 ảnh, ảnh 4-6 cuộn */
+}
+.bl-10__bottom .be-slot figure { height: 220px; }
+.bl-10__bottom .be-slot img { width: 100%; height: 100%; object-fit: cover; }
 
 /* ══════════════════════════════════════════
    MOBILE < 768px
