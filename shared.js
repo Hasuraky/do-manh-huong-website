@@ -292,20 +292,28 @@ function initAutoScroll() {
     let isPaused = false;
 
     function scrollToIdx(idx) {
-      const fig = figures[idx];
-      if (!fig) return;
-      // scrollLeft = vị trí figure trong track (tính từ track)
-      const trackRect = track.getBoundingClientRect();
-      const figRect   = fig.getBoundingClientRect();
-      const offset    = figRect.left - trackRect.left + track.scrollLeft;
+      if (idx < 0 || idx >= figures.length) return;
+      // Dùng scrollLeft của figure trong track
+      const fig    = figures[idx];
+      const offset = fig.offsetLeft;
       track.scrollTo({ left: offset, behavior: "smooth" });
       current = idx;
     }
 
     function next() {
-      const total   = figures.length;
-      const nextIdx = (current + 1) % total;
+      const nextIdx = (current + 1) % figures.length;
       scrollToIdx(nextIdx);
+    }
+
+    function syncCurrent() {
+      // Tìm figure gần nhất với scrollLeft hiện tại
+      let closest = 0;
+      let minDist = Infinity;
+      figures.forEach((fig, i) => {
+        const dist = Math.abs(fig.offsetLeft - track.scrollLeft);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      current = closest;
     }
 
     function startTimer() {
@@ -315,7 +323,6 @@ function initAutoScroll() {
       }, INTERVAL);
     }
 
-    // Dừng khi người dùng vuốt, tự chạy lại sau RESUME_DELAY
     let resumeTimer = null;
 
     track.addEventListener("touchstart", () => {
@@ -326,24 +333,18 @@ function initAutoScroll() {
     track.addEventListener("touchend", () => {
       if (resumeTimer) clearTimeout(resumeTimer);
       resumeTimer = setTimeout(() => {
-        // Đồng bộ current với vị trí scroll hiện tại
-        let closest = 0;
-        let minDist = Infinity;
-        figures.forEach((fig, i) => {
-          const trackRect = track.getBoundingClientRect();
-          const figRect   = fig.getBoundingClientRect();
-          const dist = Math.abs(figRect.left - trackRect.left);
-          if (dist < minDist) { minDist = dist; closest = i; }
-        });
-        current = closest;
+        syncCurrent();
         isPaused = false;
       }, RESUME_DELAY);
     }, { passive: true });
 
-    // Dừng khi hover (desktop)
     track.addEventListener("mouseenter", () => { isPaused = true; });
-    track.addEventListener("mouseleave", () => { isPaused = false; });
+    track.addEventListener("mouseleave", () => {
+      syncCurrent();
+      isPaused = false;
+    });
 
-    startTimer();
+    // Đợi layout xong rồi mới bắt đầu
+    setTimeout(startTimer, 500);
   });
 }
