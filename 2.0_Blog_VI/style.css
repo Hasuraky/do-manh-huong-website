@@ -148,6 +148,22 @@
   object-fit: unset; /* Hien thi nguyen ban, khong crop */
 }
 
+/* Scroll top: anh lon full width, cuon ngang */
+.be-scroll--top {
+  gap: 8px;
+}
+.be-scroll--top figure {
+  height: auto;
+  width: 100%;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+.be-scroll--top figure img {
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+}
+
 /* Scroll doc */
 .be-scroll-v {
   display: flex; flex-direction: column; gap: 8px;

@@ -40,7 +40,17 @@
     </div>`;
   }
 
-  // ── Text block (tối đa 1/2 chiều ngang entry) ────────────
+  // ── Slot TOP: full width, nhiều ảnh → cuộn lớn ──────────
+  function slotTop(imgs, cls = "") {
+    if (!imgs || !imgs.length) return "";
+    if (imgs.length === 1) {
+      return `<div class="be-slot ${cls}">${fig(imgs[0].file, imgs[0].ratio)}</div>`;
+    }
+    const items = imgs.map(i => fig(i.file, i.ratio)).join("");
+    return `<div class="be-slot ${cls}">
+      <div class="be-scroll be-scroll--top">${items}</div>
+    </div>`;
+  }
   function textBlock(entry) {
     const caption = (entry.text && (entry.text[LANG] || entry.text.en)) || "";
     const dt = (entry.date || "").replace(/\./g, "-");
@@ -184,7 +194,7 @@
     "9": function (entry) {
       return `<div class="bl-9">
         ${textBlock(entry)}
-        ${slot(getSlot(entry, 1), "bl-9__top")}
+        ${slotTop(getSlot(entry, 1), "bl-9__top")}
         <div class="bl-9__bottom">
           ${slot(getSlot(entry, 2))}
           ${slot(getSlot(entry, 3))}
