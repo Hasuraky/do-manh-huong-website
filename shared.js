@@ -280,33 +280,32 @@ document.addEventListener("blog-rendered", function () {
 
 // ── 9. Auto-scroll với hiệu ứng Push ─────────────────────
 function initAutoScroll() {
-  const INTERVAL   = 2000;  // 2 giây mỗi ảnh
-  const RESUME_DELAY = 4000; // Tự chạy lại sau 4 giây khi người dùng vuốt
+  const INTERVAL     = 2000;
+  const RESUME_DELAY = 4000;
 
   document.querySelectorAll(".be-scroll").forEach(track => {
     const figures = track.querySelectorAll("figure");
-    if (figures.length < 2) return; // Chỉ 1 ảnh thì không cần
+    if (figures.length < 2) return;
 
-    let current   = 0;
-    let timer     = null;
-    let isPaused  = false;
+    let current  = 0;
+    let timer    = null;
+    let isPaused = false;
 
-    function getScrollTargets() {
-      // Lấy vị trí left của từng figure
-      return Array.from(figures).map(f => f.offsetLeft);
-    }
-
-    function scrollTo(idx) {
-      const targets = getScrollTargets();
-      if (!targets[idx]) return;
-      track.scrollTo({ left: targets[idx], behavior: "smooth" });
+    function scrollToIdx(idx) {
+      const fig = figures[idx];
+      if (!fig) return;
+      // scrollLeft = vị trí figure trong track (tính từ track)
+      const trackRect = track.getBoundingClientRect();
+      const figRect   = fig.getBoundingClientRect();
+      const offset    = figRect.left - trackRect.left + track.scrollLeft;
+      track.scrollTo({ left: offset, behavior: "smooth" });
       current = idx;
     }
 
     function next() {
-      const total = figures.length;
+      const total   = figures.length;
       const nextIdx = (current + 1) % total;
-      scrollTo(nextIdx);
+      scrollToIdx(nextIdx);
     }
 
     function startTimer() {
@@ -318,6 +317,7 @@ function initAutoScroll() {
 
     // Dừng khi người dùng vuốt, tự chạy lại sau RESUME_DELAY
     let resumeTimer = null;
+
     track.addEventListener("touchstart", () => {
       isPaused = true;
       if (resumeTimer) clearTimeout(resumeTimer);
@@ -327,12 +327,12 @@ function initAutoScroll() {
       if (resumeTimer) clearTimeout(resumeTimer);
       resumeTimer = setTimeout(() => {
         // Đồng bộ current với vị trí scroll hiện tại
-        const targets = getScrollTargets();
-        const scrollLeft = track.scrollLeft;
         let closest = 0;
         let minDist = Infinity;
-        targets.forEach((pos, i) => {
-          const dist = Math.abs(pos - scrollLeft);
+        figures.forEach((fig, i) => {
+          const trackRect = track.getBoundingClientRect();
+          const figRect   = fig.getBoundingClientRect();
+          const dist = Math.abs(figRect.left - trackRect.left);
           if (dist < minDist) { minDist = dist; closest = i; }
         });
         current = closest;
