@@ -158,7 +158,10 @@
 .be-scroll-v img { width: 100%; height: auto; border-radius: 10px; }
 
 /* An chu swipe hint */
-.be-scroll-hint { display: none; }
+.be-scroll-hint { 
+  font-size: 11px; color: #999; text-align: center;
+  letter-spacing: .06em; padding: 3px 0 0; margin: 0;
+}
 
 /* ══════════════════════════════════════════
    VIDEO
