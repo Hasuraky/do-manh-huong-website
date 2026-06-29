@@ -205,7 +205,7 @@
 .be-video__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
 /* ══════════════════════════════════════════
-   LAYOUT 10 — Text + 1 slot lớn trên + 6 slot nhỏ dưới (1 hàng ngang)
+   LAYOUT 10 — Text + 1 slot lớn trên + 6 slot nhỏ dưới (1 hàng, tỉ lệ tự do)
    ══════════════════════════════════════════ */
 .bl-10 { display: flex; flex-direction: column; gap: 8px; }
 .bl-10__top { width: 100%; }
@@ -214,27 +214,31 @@
   flex-direction: row;
   flex-wrap: nowrap;
   gap: 8px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+  align-items: flex-start;
 }
-.bl-10__bottom::-webkit-scrollbar { display: none; }
 .bl-10__bottom > .be-slot {
-  flex: 0 0 calc((100% - 5 * 8px) / 3.5);
-  scroll-snap-align: start;
+  flex: 1 1 0;
   min-width: 0;
 }
 .bl-10__bottom > .be-slot figure {
-  height: 220px;
   width: 100%;
   overflow: hidden;
   border-radius: 10px;
+  margin: 0;
 }
+/* Tỉ lệ từng ảnh theo ratio nhập trong Sheets */
+.bl-10__bottom > .be-slot .ar-1x1  { aspect-ratio: 1/1; }
+.bl-10__bottom > .be-slot .ar-3x4  { aspect-ratio: 3/4; }
+.bl-10__bottom > .be-slot .ar-4x3  { aspect-ratio: 4/3; }
 .bl-10__bottom > .be-slot img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .bl-10__bottom { flex-wrap: wrap; }
+  .bl-10__bottom > .be-slot { flex: 0 0 calc(33% - 6px); }
 }
 
 /* ══════════════════════════════════════════
