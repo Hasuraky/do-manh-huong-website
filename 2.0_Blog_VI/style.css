@@ -122,10 +122,14 @@
 .be-scroll {
   display: flex; gap: 8px;
   overflow-x: auto; scroll-snap-type: x mandatory;
-  scrollbar-width: thin; scrollbar-color: rgba(0,0,0,.15) transparent;
+  scrollbar-width: none; /* Ẩn scrollbar mặc định */
+  scrollbar-color: transparent transparent;
   padding-bottom: 4px;
   align-items: stretch;
+  scroll-behavior: smooth; /* Push effect */
+  -webkit-overflow-scrolling: touch;
 }
+.be-scroll::-webkit-scrollbar { display: none; }
 .be-scroll::-webkit-scrollbar { height: 3px; }
 .be-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,.15); border-radius: 2px; }
 .be-scroll figure {

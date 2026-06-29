@@ -86,7 +86,19 @@ document.addEventListener("DOMContentLoaded", () => {
   // ── 5. Hover scale trên ảnh blog ─────────────────────────
   // Handled by CSS — không cần JS
 
-  // ── 6. Page fade transition — đã tắt ─────────────────────
+  // ── 6. Page fade transition ──────────────────────────────
+  document.querySelectorAll("a[href]").forEach(link => {
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("#") || href.startsWith("mailto") || href.startsWith("http") || link.getAttribute("target") === "_blank") return;
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      document.body.classList.add("page-exit");
+      setTimeout(() => { window.location.href = href; }, 180);
+    });
+  });
+  // Fade in khi vào trang
+  document.body.classList.add("page-enter");
+  setTimeout(() => document.body.classList.remove("page-enter"), 250);
 });
 
 // ── 7. Gallery Lightbox với swipe + next/prev ─────────────
@@ -262,4 +274,76 @@ document.addEventListener("blog-rendered", function () {
     img.setAttribute("draggable","false");
     img.addEventListener("dragstart", e => e.preventDefault());
   });
+  // Init auto-scroll
+  initAutoScroll();
 });
+
+// ── 9. Auto-scroll với hiệu ứng Push ─────────────────────
+function initAutoScroll() {
+  const INTERVAL   = 2000;  // 2 giây mỗi ảnh
+  const RESUME_DELAY = 4000; // Tự chạy lại sau 4 giây khi người dùng vuốt
+
+  document.querySelectorAll(".be-scroll").forEach(track => {
+    const figures = track.querySelectorAll("figure");
+    if (figures.length < 2) return; // Chỉ 1 ảnh thì không cần
+
+    let current   = 0;
+    let timer     = null;
+    let isPaused  = false;
+
+    function getScrollTargets() {
+      // Lấy vị trí left của từng figure
+      return Array.from(figures).map(f => f.offsetLeft);
+    }
+
+    function scrollTo(idx) {
+      const targets = getScrollTargets();
+      if (!targets[idx]) return;
+      track.scrollTo({ left: targets[idx], behavior: "smooth" });
+      current = idx;
+    }
+
+    function next() {
+      const total = figures.length;
+      const nextIdx = (current + 1) % total;
+      scrollTo(nextIdx);
+    }
+
+    function startTimer() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(() => {
+        if (!isPaused) next();
+      }, INTERVAL);
+    }
+
+    // Dừng khi người dùng vuốt, tự chạy lại sau RESUME_DELAY
+    let resumeTimer = null;
+    track.addEventListener("touchstart", () => {
+      isPaused = true;
+      if (resumeTimer) clearTimeout(resumeTimer);
+    }, { passive: true });
+
+    track.addEventListener("touchend", () => {
+      if (resumeTimer) clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => {
+        // Đồng bộ current với vị trí scroll hiện tại
+        const targets = getScrollTargets();
+        const scrollLeft = track.scrollLeft;
+        let closest = 0;
+        let minDist = Infinity;
+        targets.forEach((pos, i) => {
+          const dist = Math.abs(pos - scrollLeft);
+          if (dist < minDist) { minDist = dist; closest = i; }
+        });
+        current = closest;
+        isPaused = false;
+      }, RESUME_DELAY);
+    }, { passive: true });
+
+    // Dừng khi hover (desktop)
+    track.addEventListener("mouseenter", () => { isPaused = true; });
+    track.addEventListener("mouseleave", () => { isPaused = false; });
+
+    startTimer();
+  });
+}
