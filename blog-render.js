@@ -204,6 +204,23 @@
       </div>`;
     },
 
+    // ── Layout 10: Text + 1 slot lớn trên + 6 slot nhỏ dưới (2 hàng x 3)
+    "10": function (entry) {
+      return `<div class="bl-10">
+        ${textBlock(entry)}
+        ${slotTop(getSlot(entry, 1), "bl-10__top")}
+        <div class="bl-10__bottom">
+          ${slot(getSlot(entry, 2))}
+          ${slot(getSlot(entry, 3))}
+          ${slot(getSlot(entry, 4))}
+          ${slot(getSlot(entry, 5))}
+          ${slot(getSlot(entry, 6))}
+          ${slot(getSlot(entry, 7))}
+        </div>
+        ${scrollStrip(entry.moreImages, entry.scrollDir)}
+      </div>`;
+    },
+
     // ── Video ngang ───────────────────────────────────────
     "video": function (entry) {
       return `<div class="be-video">

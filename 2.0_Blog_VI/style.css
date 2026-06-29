@@ -196,6 +196,17 @@
 .be-video__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
 /* ══════════════════════════════════════════
+   LAYOUT 10 — Text + 1 slot lớn trên + 6 slot nhỏ dưới (2 hàng x 3)
+   ══════════════════════════════════════════ */
+.bl-10 { display: flex; flex-direction: column; gap: 8px; }
+.bl-10__top { width: 100%; }
+.bl-10__bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+@media (max-width: 768px) {
+  .bl-10__bottom { grid-template-columns: 1fr 1fr; }
+}
+
+/* ══════════════════════════════════════════
    MOBILE < 768px
    ══════════════════════════════════════════ */
 @media (max-width: 768px) {
