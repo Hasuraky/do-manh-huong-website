@@ -123,14 +123,22 @@
   display: flex; gap: 8px;
   overflow-x: auto; scroll-snap-type: x mandatory;
   scrollbar-width: thin; scrollbar-color: rgba(0,0,0,.15) transparent;
-  padding-bottom: 2px;
+  padding-bottom: 4px;
 }
 .be-scroll::-webkit-scrollbar { height: 3px; }
 .be-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,.15); border-radius: 2px; }
 .be-scroll figure { flex-shrink: 0; scroll-snap-align: start; }
-.be-scroll img { height: 220px; width: auto; border-radius: 10px; }
+.be-scroll figure img { display: block; border-radius: 10px; }
+/* Anh trong scroll: chieu cao co dinh, anh hien day du khong bi cat */
+.be-scroll .ar-16x9 { height: 220px; aspect-ratio: 16/9; }
+.be-scroll .ar-4x3  { height: 220px; aspect-ratio: 4/3; }
+.be-scroll .ar-1x1  { height: 220px; aspect-ratio: 1/1; }
+.be-scroll .ar-3x4  { height: 220px; aspect-ratio: 3/4; }
+.be-scroll .ar-9x16 { height: 220px; aspect-ratio: 9/16; }
+.be-scroll .ar-21x9 { height: 220px; aspect-ratio: 21/9; }
+.be-scroll img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Scroll dọc */
+/* Scroll doc */
 .be-scroll-v {
   display: flex; flex-direction: column; gap: 8px;
   max-height: 560px; overflow-y: auto;
@@ -139,10 +147,8 @@
 .be-scroll-v figure { width: 100%; }
 .be-scroll-v img { width: 100%; height: auto; border-radius: 10px; }
 
-.be-scroll-hint {
-  font-size: 11px; color: #999; text-align: center;
-  letter-spacing: .06em; padding: 3px 0 0; margin: 0;
-}
+/* An chu swipe hint */
+.be-scroll-hint { display: none; }
 
 /* ══════════════════════════════════════════
    VIDEO
