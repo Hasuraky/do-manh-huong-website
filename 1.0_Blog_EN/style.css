@@ -124,25 +124,28 @@
   overflow-x: auto; scroll-snap-type: x mandatory;
   scrollbar-width: thin; scrollbar-color: rgba(0,0,0,.15) transparent;
   padding-bottom: 4px;
-  align-items: flex-start;
+  align-items: stretch;
 }
 .be-scroll::-webkit-scrollbar { height: 3px; }
 .be-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,.15); border-radius: 2px; }
-.be-scroll figure { 
-  flex-shrink: 0; 
+.be-scroll figure {
+  flex-shrink: 0;
   scroll-snap-align: start;
   margin: 0;
-  height: 220px;
-  width: auto;
   border-radius: 10px;
   overflow: hidden;
-}
-.be-scroll figure img { 
-  display: block;
-  height: 100%;
+  /* Chieu cao co dinh, width tu tinh theo ti le anh goc */
+  height: 220px;
   width: auto;
+  aspect-ratio: unset;
+}
+.be-scroll figure img {
+  display: block;
+  height: 220px;
+  width: auto;
+  max-width: none;
   border-radius: 10px;
-  object-fit: cover;
+  object-fit: unset; /* Hien thi nguyen ban, khong crop */
 }
 
 /* Scroll doc */
