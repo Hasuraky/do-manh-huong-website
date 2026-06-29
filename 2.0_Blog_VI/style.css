@@ -16,6 +16,15 @@
   padding: 14px;
 }
 
+/* Layout 10 cần scroll ngang → override overflow */
+.blog-entry:has(.bl-10) {
+  overflow: visible;
+}
+.blog-entry:has(.bl-10) .bl-10 {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
 /* ── Text block (tối đa 50% chiều ngang) ── */
 .be-info { max-width: 50%; margin-bottom: 10px; }
 .be-text { font-size: 16px; line-height: 1.75; text-align: justify; margin: 0 0 6px; color: #111; }
