@@ -284,6 +284,10 @@ function initAutoScroll() {
   const RESUME_DELAY = 4000;
 
   document.querySelectorAll(".be-scroll").forEach(track => {
+    // Tránh khởi tạo lại nếu đã có timer
+    if (track._autoScrollInit) return;
+    track._autoScrollInit = true;
+
     const figures = track.querySelectorAll("figure");
     if (figures.length < 2) return;
 
@@ -291,11 +295,14 @@ function initAutoScroll() {
     let timer    = null;
     let isPaused = false;
 
+    function getOffset(fig) {
+      // Tính offset của figure so với track (không phải document)
+      return fig.offsetLeft - track.offsetLeft;
+    }
+
     function scrollToIdx(idx) {
       if (idx < 0 || idx >= figures.length) return;
-      // Dùng scrollLeft của figure trong track
-      const fig    = figures[idx];
-      const offset = fig.offsetLeft;
+      const offset = getOffset(figures[idx]);
       track.scrollTo({ left: offset, behavior: "smooth" });
       current = idx;
     }
@@ -306,11 +313,10 @@ function initAutoScroll() {
     }
 
     function syncCurrent() {
-      // Tìm figure gần nhất với scrollLeft hiện tại
       let closest = 0;
       let minDist = Infinity;
       figures.forEach((fig, i) => {
-        const dist = Math.abs(fig.offsetLeft - track.scrollLeft);
+        const dist = Math.abs(getOffset(fig) - track.scrollLeft);
         if (dist < minDist) { minDist = dist; closest = i; }
       });
       current = closest;
@@ -344,7 +350,6 @@ function initAutoScroll() {
       isPaused = false;
     });
 
-    // Đợi layout xong rồi mới bắt đầu
     setTimeout(startTimer, 500);
   });
 }
