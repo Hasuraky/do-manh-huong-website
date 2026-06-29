@@ -16,9 +16,10 @@
   padding: 14px;
 }
 
-/* ── Text ── */
+/* ── Text block (tối đa 50% chiều ngang) ── */
+.be-info { max-width: 50%; margin-bottom: 10px; }
 .be-text { font-size: 16px; line-height: 1.75; text-align: justify; margin: 0 0 6px; color: #111; }
-.be-meta  { font-size: 13px; font-style: italic; font-weight: 700; color: #555; text-align: right; margin: 0 0 10px; }
+.be-meta { font-size: 13px; font-style: italic; font-weight: 700; color: #555; text-align: right; margin: 0; }
 
 /* ── Images base ── */
 .blog-entry img {
@@ -37,34 +38,85 @@
 .ar-16x9 { aspect-ratio: 16/9; }
 .ar-21x9 { aspect-ratio: 21/9; }
 
+/* ── Slot (vị trí ảnh — 1 ảnh hoặc cuộn) ── */
+.be-slot { width: 100%; min-width: 0; }
+.be-slot-scroll { display: flex; flex-direction: column; }
+
 /* ══════════════════════════════════════════
-   LAYOUT 1 — 1 ảnh full width
+   LAYOUT 1 — Text + 1 slot full width
    ══════════════════════════════════════════ */
 .bl-1 { display: flex; flex-direction: column; gap: 8px; }
 .bl-1__img { width: 100%; }
 
 /* ══════════════════════════════════════════
-   LAYOUT 2 — 2 ảnh cạnh nhau 50/50
+   LAYOUT 2 — Text + 2 slot 50/50
    ══════════════════════════════════════════ */
 .bl-2 { display: flex; flex-direction: column; gap: 8px; }
 .bl-2__imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
 /* ══════════════════════════════════════════
-   LAYOUT 3 — 1 ảnh to trái + 2 ảnh nhỏ phải
+   LAYOUT 3 — Text + slot lớn trái + 2 slot nhỏ phải
    ══════════════════════════════════════════ */
 .bl-3 { display: flex; flex-direction: column; gap: 8px; }
 .bl-3__imgs { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; }
 .bl-3__right { display: flex; flex-direction: column; gap: 8px; }
-.bl-3__right figure { flex: 1; }
+.bl-3__right .be-slot { flex: 1; }
+.bl-3__right figure { height: 100%; }
 
 /* ══════════════════════════════════════════
-   LAYOUT 4 — 4 ảnh hàng ngang đều
+   LAYOUT 4 — Text + 4 slot hàng ngang đều
    ══════════════════════════════════════════ */
 .bl-4 { display: flex; flex-direction: column; gap: 8px; }
 .bl-4__imgs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 
 /* ══════════════════════════════════════════
-   SCROLL STRIP — ảnh thứ 5+
+   LAYOUT 5 — Text + 3 slot bằng nhau
+   ══════════════════════════════════════════ */
+.bl-5 { display: flex; flex-direction: column; gap: 8px; }
+.bl-5__imgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+/* ══════════════════════════════════════════
+   LAYOUT 6 — Text trái + slot dọc lớn phải
+   ══════════════════════════════════════════ */
+.bl-6 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: start; }
+.bl-6__left { display: flex; flex-direction: column; gap: 8px; }
+.bl-6__left .be-info { max-width: 100%; }
+.bl-6__right figure { height: 100%; min-height: 300px; }
+.bl-6__right img { height: 100%; }
+
+/* ══════════════════════════════════════════
+   LAYOUT 7 — Text + 2 slot cột bằng nhau (2fr/1fr)
+   ══════════════════════════════════════════ */
+.bl-7 { display: flex; flex-direction: column; gap: 8px; }
+.bl-7__imgs { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; }
+.bl-7__left figure, .bl-7__right figure { height: 100%; }
+
+/* ══════════════════════════════════════════
+   LAYOUT 8 — Text + slot cinematic full width
+   ══════════════════════════════════════════ */
+.bl-8 { display: flex; flex-direction: column; gap: 8px; }
+.bl-8__img figure { border-radius: 12px; }
+.bl-8__img .ar-21x9 { aspect-ratio: 21/9; }
+/* Nếu không có ratio 21:9 thì mặc định 16:9 */
+.bl-8__img .ar-16x9 { aspect-ratio: 16/9; }
+
+/* ══════════════════════════════════════════
+   LAYOUT 9 — Text + 1 slot lớn trên + 3 slot nhỏ dưới
+   ══════════════════════════════════════════ */
+.bl-9 { display: flex; flex-direction: column; gap: 8px; }
+.bl-9__top { width: 100%; }
+.bl-9__bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+/* ══════════════════════════════════════════
+   LAYOUT photo-video — Text + ảnh trái + video phải
+   ══════════════════════════════════════════ */
+.bl-pv { display: flex; flex-direction: column; gap: 8px; }
+.bl-pv__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: start; }
+.bl-pv__photo figure { height: 100%; }
+.bl-pv__video { display: flex; flex-direction: column; }
+
+/* ══════════════════════════════════════════
+   SCROLL STRIP — moreImages
    ══════════════════════════════════════════ */
 .be-scroll-wrap { position: relative; }
 .be-scroll {
@@ -89,18 +141,19 @@
 
 .be-scroll-hint {
   font-size: 11px; color: #999; text-align: center;
-  letter-spacing: .06em; padding: 3px 0 0;
+  letter-spacing: .06em; padding: 3px 0 0; margin: 0;
 }
 
 /* ══════════════════════════════════════════
    VIDEO
    ══════════════════════════════════════════ */
 .be-video { display: flex; flex-direction: column; gap: 8px; }
+.be-video--vertical .be-video__frame { max-width: 360px; margin: 0 auto; }
 .be-video__frame {
   position: relative; width: 100%; border-radius: 12px; overflow: hidden;
 }
 .be-video__frame--16x9 { aspect-ratio: 16/9; }
-.be-video__frame--9x16 { aspect-ratio: 9/16; max-width: 360px; margin: 0 auto; }
+.be-video__frame--9x16 { aspect-ratio: 9/16; }
 .be-video__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
 /* ══════════════════════════════════════════
@@ -108,10 +161,16 @@
    ══════════════════════════════════════════ */
 @media (max-width: 768px) {
   .blog-entry { border-radius: 14px; padding: 10px; }
+  .be-info { max-width: 100%; }
   .bl-2__imgs { grid-template-columns: 1fr 1fr; }
   .bl-3__imgs { grid-template-columns: 1fr; }
   .bl-3__right { flex-direction: row; }
   .bl-4__imgs { grid-template-columns: 1fr 1fr; }
+  .bl-5__imgs { grid-template-columns: 1fr 1fr; }
+  .bl-6 { grid-template-columns: 1fr; }
+  .bl-7__imgs { grid-template-columns: 1fr; }
+  .bl-9__bottom { grid-template-columns: 1fr 1fr; }
+  .bl-pv__cols { grid-template-columns: 1fr; }
   .be-scroll img { height: 160px; }
   .be-scroll-v { max-height: 400px; }
 }

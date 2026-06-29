@@ -1,6 +1,11 @@
 /**
  * blog-render.js — render blog entries ra trang
  * KHÔNG tự fetch data — chờ blog-sheets.js gọi window.blogRender(data)
+ *
+ * SLOTS: mỗi layout dùng slot1..slot4 (mảng ảnh)
+ *   - 1 ảnh  → hiển thị cố định
+ *   - nhiều ảnh → tự động thành thanh cuộn ngang
+ * SCROLL STRIP: moreImages → cuộn ngang/dọc phía dưới
  */
 (function () {
   const LANG     = document.documentElement.lang || "en";
@@ -14,90 +19,213 @@
     "9:16": "ar-9x16", "16:9": "ar-16x9", "21:9": "ar-21x9",
   };
 
+  // ── 1 ảnh cố định ────────────────────────────────────────
   function fig(file, ratio) {
     const cls = RATIO_CLASS[ratio] || "ar-4x3";
     return `<figure class="${cls}"><img src="${IMG_BASE}${file}" alt="${file}" /></figure>`;
   }
 
+  // ── Slot: 1 ảnh → cố định | nhiều ảnh → cuộn ngang ──────
+  function slot(imgs, cls = "") {
+    if (!imgs || !imgs.length) return "";
+    if (imgs.length === 1) {
+      return `<div class="be-slot ${cls}">${fig(imgs[0].file, imgs[0].ratio)}</div>`;
+    }
+    const items = imgs.map(i => fig(i.file, i.ratio)).join("");
+    return `<div class="be-slot ${cls}">
+      <div class="be-slot-scroll">
+        <div class="be-scroll">${items}</div>
+        <p class="be-scroll-hint">${hint}</p>
+      </div>
+    </div>`;
+  }
+
+  // ── Text block (tối đa 1/2 chiều ngang entry) ────────────
   function textBlock(entry) {
     const caption = (entry.text && (entry.text[LANG] || entry.text.en)) || "";
     const dt = (entry.date || "").replace(/\./g, "-");
-    return `<p class="be-text">${caption}</p>
-            <p class="be-meta"><time datetime="${dt}">${entry.date}</time>, ${entry.location}</p>`;
+    return `<div class="be-info">
+      <p class="be-text">${caption}</p>
+      <p class="be-meta"><time datetime="${dt}">${entry.date}</time>, ${entry.location}</p>
+    </div>`;
   }
 
+  // ── Scroll strip phía dưới (moreImages) ──────────────────
   function scrollStrip(imgs, direction) {
     if (!imgs || !imgs.length) return "";
     const isV = direction === "vertical";
     const cls  = isV ? "be-scroll-v" : "be-scroll";
     const hintText = isV ? "↕ scroll" : hint;
-    const items = imgs.map(item => fig(item.file, item.ratio)).join("");
+    const items = imgs.map(i => fig(i.file, i.ratio)).join("");
     return `<div class="be-scroll-wrap">
       <div class="${cls}">${items}</div>
       <p class="be-scroll-hint">${hintText}</p>
     </div>`;
   }
 
-  function videoBlock(entry) {
-    const ratio = entry.videoRatio === "9:16" ? "9x16" : "16x9";
-    return `<div class="be-video">
-      ${textBlock(entry)}
-      <div class="be-video__frame be-video__frame--${ratio}">
-        <iframe src="https://www.youtube.com/embed/${entry.videoId}"
-          title="video" frameborder="0"
-          allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
-          allowfullscreen></iframe>
-      </div>
+  // ── Video frame ───────────────────────────────────────────
+  function videoFrame(videoId, ratio) {
+    const cls = ratio === "9:16" ? "9x16" : "16x9";
+    return `<div class="be-video__frame be-video__frame--${cls}">
+      <iframe src="https://www.youtube.com/embed/${videoId}"
+        title="video" frameborder="0"
+        allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+        allowfullscreen></iframe>
     </div>`;
   }
 
+  // ── Parse slot từ entry ───────────────────────────────────
+  // AppScript trả về slot1, slot2, slot3, slot4 là mảng {file, ratio}
+  function getSlot(entry, n) {
+    return entry[`slot${n}`] || [];
+  }
+
+  // ════════════════════════════════════════════════════════
+  // LAYOUTS
+  // ════════════════════════════════════════════════════════
   const LAYOUTS = {
+
+    // ── Layout 1: Text + 1 slot full width ───────────────
     "1": function (entry) {
-      const [a] = entry.mainImages || [];
       return `<div class="bl-1">
         ${textBlock(entry)}
-        ${a ? `<div class="bl-1__img">${fig(a.file, a.ratio)}</div>` : ""}
+        ${slot(getSlot(entry, 1), "bl-1__img")}
         ${scrollStrip(entry.moreImages, entry.scrollDir)}
       </div>`;
     },
+
+    // ── Layout 2: Text + 2 slot cạnh nhau 50/50 ──────────
     "2": function (entry) {
-      const [a, b] = entry.mainImages || [];
       return `<div class="bl-2">
         ${textBlock(entry)}
         <div class="bl-2__imgs">
-          ${a ? fig(a.file, a.ratio) : ""}
-          ${b ? fig(b.file, b.ratio) : ""}
+          ${slot(getSlot(entry, 1))}
+          ${slot(getSlot(entry, 2))}
         </div>
         ${scrollStrip(entry.moreImages, entry.scrollDir)}
       </div>`;
     },
+
+    // ── Layout 3: Text + slot lớn trái + 2 slot nhỏ phải ─
     "3": function (entry) {
-      const [a, b, c] = entry.mainImages || [];
       return `<div class="bl-3">
         ${textBlock(entry)}
         <div class="bl-3__imgs">
-          ${a ? fig(a.file, a.ratio) : ""}
+          ${slot(getSlot(entry, 1), "bl-3__main")}
           <div class="bl-3__right">
-            ${b ? fig(b.file, b.ratio) : ""}
-            ${c ? fig(c.file, c.ratio) : ""}
+            ${slot(getSlot(entry, 2))}
+            ${slot(getSlot(entry, 3))}
           </div>
         </div>
         ${scrollStrip(entry.moreImages, entry.scrollDir)}
       </div>`;
     },
+
+    // ── Layout 4: Text + 4 slot lưới ngang đều ───────────
     "4": function (entry) {
-      const imgs = (entry.mainImages || []).slice(0, 4);
       return `<div class="bl-4">
         ${textBlock(entry)}
         <div class="bl-4__imgs">
-          ${imgs.map(i => fig(i.file, i.ratio)).join("")}
+          ${slot(getSlot(entry, 1))}
+          ${slot(getSlot(entry, 2))}
+          ${slot(getSlot(entry, 3))}
+          ${slot(getSlot(entry, 4))}
         </div>
         ${scrollStrip(entry.moreImages, entry.scrollDir)}
       </div>`;
     },
-    "video": videoBlock,
+
+    // ── Layout 5: Text + 3 slot bằng nhau ngang hàng ─────
+    "5": function (entry) {
+      return `<div class="bl-5">
+        ${textBlock(entry)}
+        <div class="bl-5__imgs">
+          ${slot(getSlot(entry, 1))}
+          ${slot(getSlot(entry, 2))}
+          ${slot(getSlot(entry, 3))}
+        </div>
+        ${scrollStrip(entry.moreImages, entry.scrollDir)}
+      </div>`;
+    },
+
+    // ── Layout 6: Text trái + slot dọc lớn phải ──────────
+    "6": function (entry) {
+      return `<div class="bl-6">
+        <div class="bl-6__left">
+          ${textBlock(entry)}
+          ${scrollStrip(entry.moreImages, entry.scrollDir)}
+        </div>
+        ${slot(getSlot(entry, 1), "bl-6__right")}
+      </div>`;
+    },
+
+    // ── Layout 7: Text + slot trái + slot phải (2 cột) ───
+    "7": function (entry) {
+      return `<div class="bl-7">
+        ${textBlock(entry)}
+        <div class="bl-7__imgs">
+          ${slot(getSlot(entry, 1), "bl-7__left")}
+          ${slot(getSlot(entry, 2), "bl-7__right")}
+        </div>
+        ${scrollStrip(entry.moreImages, entry.scrollDir)}
+      </div>`;
+    },
+
+    // ── Layout 8: Text + slot full width cinematic (21:9) ─
+    "8": function (entry) {
+      return `<div class="bl-8">
+        ${textBlock(entry)}
+        ${slot(getSlot(entry, 1), "bl-8__img")}
+        ${scrollStrip(entry.moreImages, entry.scrollDir)}
+      </div>`;
+    },
+
+    // ── Layout 9: Text + 1 slot lớn trên + 3 slot nhỏ dưới
+    "9": function (entry) {
+      return `<div class="bl-9">
+        ${textBlock(entry)}
+        ${slot(getSlot(entry, 1), "bl-9__top")}
+        <div class="bl-9__bottom">
+          ${slot(getSlot(entry, 2))}
+          ${slot(getSlot(entry, 3))}
+          ${slot(getSlot(entry, 4))}
+        </div>
+        ${scrollStrip(entry.moreImages, entry.scrollDir)}
+      </div>`;
+    },
+
+    // ── Video ngang ───────────────────────────────────────
+    "video": function (entry) {
+      return `<div class="be-video">
+        ${textBlock(entry)}
+        ${videoFrame(entry.videoId, entry.videoRatio)}
+      </div>`;
+    },
+
+    // ── Video dọc 9:16 ────────────────────────────────────
+    "video-v": function (entry) {
+      return `<div class="be-video be-video--vertical">
+        ${textBlock(entry)}
+        ${videoFrame(entry.videoId, "9:16")}
+      </div>`;
+    },
+
+    // ── Layout kết hợp: Text + ảnh trái + video phải ─────
+    "photo-video": function (entry) {
+      return `<div class="bl-pv">
+        ${textBlock(entry)}
+        <div class="bl-pv__cols">
+          ${slot(getSlot(entry, 1), "bl-pv__photo")}
+          <div class="bl-pv__video">
+            ${videoFrame(entry.videoId, entry.videoRatio)}
+          </div>
+        </div>
+        ${scrollStrip(entry.moreImages, entry.scrollDir)}
+      </div>`;
+    },
   };
 
+  // ── Render 1 entry ────────────────────────────────────────
   function renderEntry(entry) {
     const layout = String(entry.layout || "1");
     const fn = LAYOUTS[layout];
@@ -110,7 +238,7 @@
     </article>`;
   }
 
-  // ── Hàm render chính — được gọi từ blog-sheets.js ────────
+  // ── Hàm render chính ─────────────────────────────────────
   window.blogRender = function(data) {
     const container = document.querySelector(".blog-entries");
     if (!container) {
@@ -121,14 +249,11 @@
     container.innerHTML = data.map(entry => renderEntry(entry)).join("\n");
     document.dispatchEvent(new Event("blog-rendered"));
 
-    // Force reveal tất cả entries ngay lập tức, không chờ typewriter
     requestAnimationFrame(() => {
       container.querySelectorAll(".reveal-on-scroll").forEach(el => {
         el.classList.add("revealed");
       });
     });
   };
-
-
 
 })();
