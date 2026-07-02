@@ -88,12 +88,13 @@
    LAYOUT 6 — Text trái + slot dọc lớn phải
    ══════════════════════════════════════════ */
 .bl-6 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: start; }
-.bl-6__left { display: flex; flex-direction: column; gap: 8px; }
+.bl-6__left { display: flex; flex-direction: column; gap: 8px; min-width: 0; overflow: hidden; }
 .bl-6__left .be-info { max-width: 100%; }
-.bl-6__slot2 { width: 100%; }
+.bl-6__slot2 { width: 100%; min-width: 0; }
 .bl-6__slot2 figure { width: 100%; }
-.bl-6__right figure { height: 100%; min-height: 300px; }
-.bl-6__right img { height: 100%; }
+.bl-6__right { width: 100%; min-width: 0; }
+.bl-6__right figure { width: 100%; min-height: 300px; }
+.bl-6__right img { width: 100%; height: 100%; object-fit: cover; }
 
 /* ══════════════════════════════════════════
    LAYOUT 7 — Text + 2 slot cột bằng nhau (2fr/1fr)
