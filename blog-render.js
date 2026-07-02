@@ -161,11 +161,11 @@
     // ── Layout 6: Text trái + slot2 trái dưới + slot1 phải lớn
     "6": function (entry) {
       return `<div class="bl-6">
+        ${slot(getSlot(entry, 1), "bl-6__right")}
         <div class="bl-6__left">
           ${textBlock(entry)}
           ${slot(getSlot(entry, 2), "bl-6__slot2")}
         </div>
-        ${slot(getSlot(entry, 1), "bl-6__right")}
       </div>`;
     },
 
