@@ -253,6 +253,35 @@
     },
   };
 
+  // ── Đồng bộ chiều cao video = chiều cao ảnh (layout photo-video) ──
+  // Ảnh có tỉ lệ tuỳ ý (lấy từ Sheet) nên không thể tính bằng CSS thuần;
+  // video sẽ tự co theo chiều cao thật của ảnh, giữ nguyên tỉ lệ gốc.
+  function syncPhotoVideoHeights() {
+    document.querySelectorAll(".bl-pv__cols").forEach(cols => {
+      const photoFigure = cols.querySelector(".bl-pv__photo figure");
+      const frame       = cols.querySelector(".bl-pv__video .be-video__frame");
+      if (!photoFigure || !frame) return;
+
+      // Dưới 768px, 2 cột xếp chồng dọc → trả video về full width, tỉ lệ gốc
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        frame.style.height = "";
+        frame.style.width  = "";
+        return;
+      }
+      const h = photoFigure.getBoundingClientRect().height;
+      if (h > 0) {
+        frame.style.height = h + "px";
+        frame.style.width  = "auto";
+      }
+    });
+  }
+
+  let pvResizeTimer = null;
+  window.addEventListener("resize", () => {
+    clearTimeout(pvResizeTimer);
+    pvResizeTimer = setTimeout(syncPhotoVideoHeights, 100);
+  });
+
   // ── Render 1 entry ────────────────────────────────────────
   function renderEntry(entry) {
     const layout = String(entry.layout || "1");
@@ -281,6 +310,7 @@
       container.querySelectorAll(".reveal-on-scroll").forEach(el => {
         el.classList.add("revealed");
       });
+      syncPhotoVideoHeights();
     });
   };
 

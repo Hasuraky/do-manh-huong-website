@@ -128,7 +128,10 @@
 .bl-pv { display: flex; flex-direction: column; gap: 8px; }
 .bl-pv__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: start; }
 .bl-pv__photo figure { height: 100%; }
-.bl-pv__video { display: flex; flex-direction: column; }
+/* Video được JS (syncPhotoVideoHeights trong blog-render.js) gán height = chiều cao ảnh,
+   ở đây chỉ cần căn giữa video khi nó hẹp hơn cột (video dọc 9:16) */
+.bl-pv__video { display: flex; justify-content: center; }
+.bl-pv__video .be-video__frame { width: auto; max-width: 100%; margin: 0 auto; }
 
 /* ══════════════════════════════════════════
    SCROLL STRIP — moreImages
@@ -262,6 +265,7 @@
   .bl-7__imgs { grid-template-columns: 1fr; }
   .bl-9__bottom { grid-template-columns: 1fr 1fr; }
   .bl-pv__cols { grid-template-columns: 1fr; }
+  .bl-pv__video .be-video__frame { width: 100%; height: auto; }
   .be-scroll img { height: 160px; }
   .be-scroll-v { max-height: 400px; }
 }
