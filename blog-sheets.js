@@ -2,7 +2,7 @@
  * blog-sheets.js — fetch data từ Google Sheets AppScript
  */
 
-const SHEETS_URL = "https://script.google.com/macros/s/AKfycbxb3H86O-0tgEKpO0Mb0cHYIPheCelVTkR4pllIIogvLAghUlLPX47Y93Ws3ds2D6Sf/exec";
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzMT1a7pFMZdMXxSltrDAtuO03Jr2aG0q8TeC40xZ5nS7zjBLhSKcoSDNb817kifeq2/exec";
 
 (function () {
   if (!SHEETS_URL) return;
