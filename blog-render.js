@@ -79,6 +79,7 @@
     return `<div class="be-video__frame be-video__frame--${cls}">
       <iframe src="https://www.youtube.com/embed/${videoId}"
         title="video" frameborder="0"
+        referrerpolicy="strict-origin-when-cross-origin"
         allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
         allowfullscreen></iframe>
     </div>`;
