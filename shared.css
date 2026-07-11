@@ -108,6 +108,27 @@ img { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;
 .hero-banner__image-wrapper { margin: 0; min-height: 430px; }
 .hero-banner__image { width: 100%; min-height: 430px; object-fit: cover; }
 
+/* ── HERO TAGLINE ("WHAT DID I DO?") ── */
+.hero-tagline {
+  position: absolute; left: 13%; top: 56%;
+  transform: translateY(calc(-50% - 58px));
+  margin: 0; z-index: 5;
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(20px, 2.2vw, 40px);
+  letter-spacing: .32em;
+  white-space: nowrap;
+  text-shadow: 0 2px 12px rgba(0,0,0,.35);
+  pointer-events: none;
+}
+@media (max-width: 768px) {
+  .hero-tagline {
+    left: 16px; top: auto; bottom: 72px;
+    transform: none;
+    font-size: 17px; letter-spacing: .22em;
+  }
+}
+
 /* ── HERO SOCIALS (Facebook / YouTube / TikTok) ── */
 .hero-socials {
   position: absolute; left: 13%; top: 56%;
