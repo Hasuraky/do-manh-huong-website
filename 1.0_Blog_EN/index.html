@@ -1,89 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../shared.css" />
-    <link rel="stylesheet" href="./style.css" />
-    <title>Blog – DO MANH HUONG</title>
-    <link rel="icon" type="image/png" href="../image/icon-favicon.png" />
-    <link rel="apple-touch-icon" href="../image/icon-favicon.png" />
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="header-container">
-        <a href="../1.0_Blog_EN/index.html" class="brand">DO MANH HUONG</a>
-        <nav class="primary-nav" aria-label="Main navigation">
-          <a href="../1.0_Blog_EN/index.html" class="nav-item active">Blog</a>
-          <a href="../1.1_Tomo_EN/index.html" class="nav-item">Tomo</a>
-          <a href="../1.2_MangaC_EN/index.html" class="nav-item">MangaC</a>
-          <a href="../1.3_Short-film_EN/index.html" class="nav-item">Short film "Doat Hon"</a>
-          <a href="../1.4_Myself_EN/index.html" class="nav-item">Myself</a>
-        </nav>
-        <div class="lang-right">
-          <button class="hamburger" id="hamburger" aria-expanded="false" aria-label="Menu">
-            <span></span><span></span><span></span>
-          </button>
-          <div class="lang-switch">
-            <button class="lang-btn" id="langToggle" type="button" aria-haspopup="true" aria-expanded="false">
-              EN <span class="arrow"></span>
-            </button>
-            <ul class="lang-menu" id="langMenu" role="menu" aria-labelledby="langToggle">
-              <li role="none"><a role="menuitem" href="../1.0_Blog_EN/index.html">EN</a></li>
-              <li role="none"><a role="menuitem" href="../2.0_Blog_VI/index.html">VI</a></li>
-              <li role="none"><a role="menuitem" href="../3.0_Blog_JP/index.html">JP</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </header>
-    <nav class="mobile-nav" id="mobileMenu" aria-label="Mobile navigation">
-          <a href="../1.0_Blog_EN/index.html" class="nav-item active">Blog</a>
-          <a href="../1.1_Tomo_EN/index.html" class="nav-item">Tomo</a>
-          <a href="../1.2_MangaC_EN/index.html" class="nav-item">MangaC</a>
-          <a href="../1.3_Short-film_EN/index.html" class="nav-item">Short film "Doat Hon"</a>
-          <a href="../1.4_Myself_EN/index.html" class="nav-item">Myself</a>
-    </nav>
-    <main class="blog-home">
-      <section class="hero-banner">
-        <figure class="hero-banner__image-wrapper">
-          <img src="../image/Blog/1_Banner_2.jpg" alt="DO MANH HUONG" class="hero-banner__image" />
-        </figure>
-        <p class="hero-tagline">WHAT DID I DO?</p>
-        <div class="hero-socials">
-          <a href="http://fb.com/huongytbg" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 8h2V5h-2a4 4 0 0 0-4 4v2H8v3h2v6h3v-6h2.2l.5-3H13v-1.6c0-.8.4-1.4 1-1.4z"/></svg>
-          </a>
-          <a href="https://www.youtube.com/@chanlamhasu" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21.6 7.2a2.8 2.8 0 0 0-1.97-1.98C17.9 4.75 12 4.75 12 4.75s-5.9 0-7.63.47A2.8 2.8 0 0 0 2.4 7.2 29 29 0 0 0 1.93 12c0 1.62.16 3.23.47 4.8a2.8 2.8 0 0 0 1.97 1.98c1.73.47 7.63.47 7.63.47s5.9 0 7.63-.47a2.8 2.8 0 0 0 1.97-1.98c.31-1.57.47-3.18.47-4.8s-.16-3.23-.47-4.8zM9.9 15.1V8.9L15.1 12l-5.2 3.1z"/></svg>
-          </a>
-          <a href="https://www.tiktok.com/@chanlamleuleu" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 1 1-2.59-2.59c.27 0 .53.04.78.12V9.77a5.76 5.76 0 0 0-.78-.05A5.66 5.66 0 1 0 15.5 15.4V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.28 4.28 0 0 1-3.2-1.48z"/></svg>
-          </a>
-        </div>
-      </section>
-      <section class="intro-text hero-intro" aria-label="Introduction">
-        <div class="intro-text__inner">
-          <p class="intro-typewriter">Hi, I'm Huong.<br />This website is where I keep my projects, my films, and the small pieces of emotion I've gathered along my creative journey.</p>
-          <hr class="intro-text__divider" />
-        </div>
-      </section>
-      <section class="blog-entries" aria-label="Blog entries"></section>
-    </main>
-    <hr class="footer__divider" />
-    <footer class="site-footer">
-      <div class="footer__inner">
-        <p class="footer__credit">© ハス 2025 | Designed &amp; Built by H.</p>
-        <p class="footer__language">Language:
-          <a href="../2.0_Blog_VI/index.html" class="footer__lang-link">[VI]</a>
-          <a href="../1.0_Blog_EN/index.html" class="footer__lang-link">[EN]</a>
-          <a href="../3.0_Blog_JP/index.html" class="footer__lang-link">[JP]</a>
-        </p>
-      </div>
-    </footer>
-    <script src="../shared.js" defer></script>
-    <script src="../sheets-config.js" defer></script>
-    <script src="../blog-render.js" defer></script>
-    <script src="../blog-sheets.js" defer></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="refresh" content="0; url=/en/blog/" />
+  <link rel="canonical" href="https://huongdm.com/en/blog/" />
+  <title>Redirecting…</title>
+</head>
+<body><p>This page has moved. <a href="/en/blog/">Click here</a>.</p></body>
 </html>

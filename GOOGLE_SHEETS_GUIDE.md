@@ -1,6 +1,6 @@
 # Hướng dẫn kết nối Blog & Myself với Google Sheets (Apps Script CMS)
 
-Tài liệu này mô tả cách phần **Blog** (`1.0_Blog_EN`, `2.0_Blog_VI`, `3.0_Blog_JP`) và phần **Myself** (`1.4_Myself_EN`, `2_Myself_VI`, `3_Myself_JP`) lấy dữ liệu từ Google Sheets thông qua Google Apps Script, và cách cấu hình/khôi phục hệ thống này khi cần.
+Tài liệu này mô tả cách phần **Blog** (`en/blog`, `vi/blog`, `ja/blog`) và phần **Myself** (`en/myself`, `vi/myself`, `ja/myself`) lấy dữ liệu từ Google Sheets thông qua Google Apps Script, và cách cấu hình/khôi phục hệ thống này khi cần.
 
 > **Code Apps Script hoàn chỉnh nằm trong file `apps-script/Code.gs`** của repo — khi cần chỉ việc copy toàn bộ file đó dán vào trình soạn thảo Apps Script.
 >
@@ -86,7 +86,7 @@ Mỗi ô slot chấp nhận **nhiều ảnh**, phân tách bằng dấu phẩy `
 tên_file.jpg|tỉ_lệ
 ```
 
-- `tên_file` là **tên file ảnh** (không kèm đường dẫn), phải tồn tại sẵn trong thư mục `image/Blog/` của repo (`IMG_BASE = "../image/Blog/"`).
+- `tên_file` là **tên file ảnh** (không kèm đường dẫn), phải tồn tại sẵn trong thư mục `image/Blog/` của repo (`IMG_BASE = "/image/Blog/"`).
 - `tỉ_lệ` (không bắt buộc) là một trong: `1:1`, `3:4`, `4:3`, `9:16`, `16:9`, `21:9`. Nếu bỏ trống hoặc không hợp lệ → mặc định `4:3`.
 
 **Ví dụ:**

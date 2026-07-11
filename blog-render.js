@@ -9,7 +9,7 @@
  */
 (function () {
   const LANG     = document.documentElement.lang || "en";
-  const IMG_BASE = "../image/Blog/";
+  const IMG_BASE = "/image/Blog/";
 
   const HINT = { en: "← swipe →", vi: "← vuốt →", ja: "← スワイプ →" };
   const hint = HINT[LANG] || HINT.en;

@@ -95,7 +95,7 @@
   }
 
   // ── Khối kỹ năng ──────────────────────────────────────────
-  const IMG_BASE = "../image/Myself/";
+  const IMG_BASE = "/image/Myself/";
 
   function iconAlt(icon) {
     if (icon.alt) return icon.alt;
