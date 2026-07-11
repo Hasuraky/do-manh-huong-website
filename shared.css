@@ -104,9 +104,34 @@ img { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;
 .footer__lang-link:hover { text-decoration: underline; }
 
 /* ── HERO BANNER ─────────────────────────── */
-.hero-banner { width: 100%; }
+.hero-banner { width: 100%; position: relative; }
 .hero-banner__image-wrapper { margin: 0; min-height: 430px; }
 .hero-banner__image { width: 100%; min-height: 430px; object-fit: cover; }
+
+/* ── HERO SOCIALS (Facebook / YouTube / TikTok) ── */
+.hero-socials {
+  position: absolute; left: 13%; top: 56%;
+  transform: translateY(-50%);
+  display: flex; gap: 14px; z-index: 5;
+}
+.hero-socials a {
+  display: flex; align-items: center; justify-content: center;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(255,255,255,.14);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background .25s ease, transform .25s cubic-bezier(.22,1,.36,1);
+}
+.hero-socials svg { width: 22px; height: 22px; fill: #fff; }
+.hero-socials a:hover, .hero-socials a:focus-visible {
+  background: rgba(255,255,255,.3);
+  transform: translateY(-3px);
+}
+@media (max-width: 768px) {
+  .hero-socials { left: 16px; top: auto; bottom: 18px; transform: none; gap: 10px; }
+  .hero-socials a { width: 40px; height: 40px; }
+  .hero-socials svg { width: 19px; height: 19px; }
+}
 
 /* ═══════════════════════════════════════════
    RESPONSIVE — dùng chung
