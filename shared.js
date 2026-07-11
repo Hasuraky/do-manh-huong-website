@@ -101,6 +101,13 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => document.body.classList.remove("page-enter"), 250);
 });
 
+// Fix bfcache: khi bấm Back, trình duyệt khôi phục trang kèm class page-exit
+// (opacity 0) → trang trắng. pageshow với e.persisted = true nghĩa là trang
+// được lấy từ bfcache, cần gỡ class để hiện lại.
+window.addEventListener("pageshow", e => {
+  if (e.persisted) document.body.classList.remove("page-exit");
+});
+
 // ── 7. Gallery Lightbox với swipe + next/prev ─────────────
 (function setupLightbox() {
 
