@@ -108,16 +108,6 @@ img { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;
 .hero-banner__image-wrapper { margin: 0; min-height: 430px; }
 .hero-banner__image { width: 100%; min-height: 430px; object-fit: cover; }
 
-/* ── LIGHTBOX ────────────────────────────── */
-.image-lightbox {
-  position: fixed; inset: 0; z-index: 200;
-  display: none; align-items: center; justify-content: center;
-  background: rgba(0,0,0,.85);
-}
-.image-lightbox.is-open { display: flex; }
-.image-lightbox__inner { max-width: 100vw; max-height: 100vh; display: flex; align-items: center; justify-content: center; }
-.image-lightbox__image { border-radius: 20px; width: auto; height: auto; max-width: 90vw; max-height: 90vh; object-fit: contain; }
-
 /* ═══════════════════════════════════════════
    RESPONSIVE — dùng chung
    ═══════════════════════════════════════════ */
@@ -235,7 +225,7 @@ body.page-exit {
   transform: none;
 }
 
-/* Stagger delays untuk children */
+/* Stagger delays cho children */
 .reveal-on-scroll:nth-child(1) { transition-delay: .05s; }
 .reveal-on-scroll:nth-child(2) { transition-delay: .12s; }
 .reveal-on-scroll:nth-child(3) { transition-delay: .19s; }
@@ -368,6 +358,3 @@ body.page-exit {
   background: #fff;
   transform: scale(1.3);
 }
-
-/* ── Remove old lightbox classes ── */
-.image-lightbox { display: none !important; }

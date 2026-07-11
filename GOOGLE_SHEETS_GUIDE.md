@@ -24,7 +24,6 @@ blog-render.js  (dựng HTML theo layout)
 
 - `blog-sheets.js` là file **duy nhất** gọi mạng ra Apps Script. Nó không tự render, chỉ fetch rồi gọi `window.blogRender(data)`.
 - `blog-render.js` không tự fetch — chỉ chờ được gọi.
-- `blog-data.js` chỉ là mảng rỗng (`BLOG_DATA = []`), dùng làm chỗ dự phòng, **không còn được dùng thực tế** trong luồng hiện tại vì `blog-sheets.js` không import nó. Có thể giữ lại để tương lai làm fallback offline nếu muốn.
 
 ---
 
@@ -154,7 +153,7 @@ Apps Script sắp xếp theo phần số trong `id`, **giảm dần** (id số l
 - Khi trang tải, `blog-sheets.js` hiện ngay 3 khối **skeleton loading** trong `.blog-entries`.
 - Nếu fetch thành công và có dữ liệu (`data.length > 0`) → gọi `blogRender(data)`, skeleton được thay bằng nội dung thật.
 - Nếu fetch lỗi (HTTP lỗi, JSON rỗng, mất mạng, sai quyền truy cập Web App...) → xoá skeleton, để trống `.blog-entries`, đồng thời log lỗi ra Console (`blog-sheets: lỗi fetch:`).
-- **Không có** cơ chế fallback tự động sang `blog-data.js` trong code hiện tại — nếu muốn có bản dự phòng offline, cần chủ động sửa `blog-sheets.js` để dùng `BLOG_DATA` khi `catch()`.
+- **Không có** cơ chế fallback offline trong code hiện tại — nếu muốn có bản dự phòng, cần sửa `blog-sheets.js` để render một mảng data cứng khi `catch()`.
 
 ---
 
