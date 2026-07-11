@@ -188,7 +188,7 @@ Apps Script sắp xếp theo phần số trong `id`, **giảm dần** (id số l
 
 ## 11. Trang Myself — chỉnh sửa qua Google Sheets
 
-Trang Myself (3 ngôn ngữ) đọc **khối thông tin cá nhân** và **khối Work Experience** từ tab **"Myself"** trong cùng Spreadsheet với blog. Phần kỹ năng (icon) và ảnh cooperation vẫn nằm tĩnh trong HTML.
+Trang Myself (3 ngôn ngữ) đọc **khối thông tin cá nhân**, **khối Kỹ năng – Năng lực** và **khối Work Experience** từ tab **"Myself"** trong cùng Spreadsheet với blog. Chỉ ảnh cooperation và ảnh chân dung còn nằm tĩnh trong HTML.
 
 **Khác với Blog:** nội dung tĩnh trong HTML được giữ làm **fallback** — nếu fetch lỗi hoặc tab "Myself" chưa tồn tại, trang hiển thị nội dung cũ như bình thường, không bị trống.
 
@@ -218,18 +218,21 @@ Hàng đầu là header (không phân biệt hoa thường). Các cột:
 
 | Cột | Áp dụng | Mô tả |
 |---|---|---|
-| `section` | ✅ mọi dòng | `info` (thông tin cá nhân) hoặc `work` (kinh nghiệm) |
-| `key` | ✅ mọi dòng | Với `info`: `birthday`, `phone`, `email`, `address` (hoặc key mới tùy ý). Với `work`: mã bất kỳ, duy nhất (vd `w1`, `w2`) |
+| `section` | ✅ mọi dòng | `info` (thông tin cá nhân), `skill` (kỹ năng) hoặc `work` (kinh nghiệm) |
+| `key` | ✅ mọi dòng | Với `info`: `birthday`, `phone`, `email`, `address` (hoặc key mới tùy ý). Với `skill`/`work`: mã bất kỳ, duy nhất (vd `sk1`, `w1`) |
 | `parent` | chỉ `work` | Để trống = công ty. Điền `key` của công ty = dự án con hiển thị bên trong công ty đó |
-| `title_en/vi/ja` | chỉ `work` | Tên công ty / dự án theo ngôn ngữ |
+| `title_en/vi/ja` | `skill` + `work` | Tên nhóm kỹ năng / công ty / dự án theo ngôn ngữ |
 | `period_en/vi/ja` | chỉ `work` | Thời gian, vd `2020 - Present` / `2020 - Nay` / `2020年〜現在`. Tự bọc trong ngoặc khi hiển thị |
-| `text_en/vi/ja` | mọi dòng | Với `info`: giá trị hiển thị. Với `work`: các gạch đầu dòng — **mỗi dòng 1 gạch**, xuống dòng trong ô bằng **Alt+Enter** (Mac: Cmd+Enter) |
+| `text_en/vi/ja` | mọi dòng | Với `info`: giá trị hiển thị. Với `skill`: gạch đầu dòng chữ (như nhóm Language). Với `work`: các gạch đầu dòng. **Mỗi dòng 1 gạch**, xuống dòng trong ô bằng **Alt+Enter** (Mac: Cmd+Enter) |
+| `icons` | chỉ `skill` | Icon của nhóm. **Mỗi dòng trong ô = 1 hàng icon**; các icon cách nhau dấu phẩy. Cú pháp 1 icon: `tên_file.png\|wide\|border\|alt text` — `wide` = icon ngang, `border` = viền xanh (CapCut, Blender), đoạn còn lại làm alt. File phải có sẵn trong `image/Myself/` |
 
 Quy tắc chung:
 - Ngôn ngữ nào để trống → tự fallback về `text_en` (giống blog). Giá trị giống nhau cả 3 thứ tiếng (SĐT, email...) chỉ cần điền cột `_en`.
 - **Thứ tự hiển thị = thứ tự dòng trong Sheet** (không sắp xếp theo id như blog). Muốn công ty nào lên đầu thì kéo dòng lên trên.
 - `key` của `info` quyết định cách render: `email` → link mailto, `birthday` dạng `DD.MM.YYYY` → thẻ `<time>`, còn lại hiển thị chữ thường. Thêm dòng `info` với key mới (vd `website`) sẽ hiện thành một dòng mới trong danh sách.
 - Thêm công ty mới: thêm 1 dòng `section=work`, `key` mới (vd `w7`), điền title/period/text. Thêm dự án con: thêm dòng với `parent` = key công ty.
+- Thêm nhóm kỹ năng mới: thêm dòng `section=skill`, key mới (vd `sk6`), điền `title_*` + `text_*` (chữ) và/hoặc `icons`. Một nhóm có thể có cả chữ lẫn icon (chữ hiện trước, icon sau). Muốn dùng icon mới thì upload file PNG vào `image/Myself/` trước.
+- Tiêu đề khối ("Skills & Abilities" / "Kĩ năng – Năng lực" / "スキル・能力" và "WORK EXPERIENCE"...) vẫn tĩnh trong HTML từng ngôn ngữ.
 
 ### 11.4. Lỗi thường gặp (Myself)
 

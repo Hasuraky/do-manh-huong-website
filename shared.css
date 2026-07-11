@@ -251,6 +251,22 @@ body.page-exit {
   50%       { opacity: 0.5; }
 }
 
+/* ── Skeleton trang Myself (info + work exp chờ Sheets) ── */
+li.ms-skel {
+  list-style: none;
+  height: 14px; margin: 10px 0;
+  background: #e2e2e2; border-radius: 6px;
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+.ms-skel-block {
+  height: 110px; margin: 16px 0;
+  background: #e2e2e2; border-radius: 12px;
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+.ms-skel-block:nth-child(3) { animation-delay: .15s; }
+.ms-skel-block:nth-child(4) { animation-delay: .3s; }
+.ms-skel-block--sm { height: 52px; margin: 10px 0; }
+
 /* ── Scroll reveal ── */
 /* Chỉ ẩn khi nằm trong .blog-entries — trang khác (Myself, Short film...) không bị ảnh hưởng */
 .blog-entries .reveal-on-scroll {

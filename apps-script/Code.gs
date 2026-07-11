@@ -125,10 +125,11 @@ function getBlogData() {
 function getMyselfData() {
   var sheet = readSheet(MYSELF_SHEET_NAME, false);
   if (!sheet) {
-    return { error: 'Không tìm thấy tab "' + MYSELF_SHEET_NAME + '"', info: [], work: [] };
+    return { error: 'Không tìm thấy tab "' + MYSELF_SHEET_NAME + '"', info: [], work: [], skills: [] };
   }
   var info = [];
   var workAll = [];
+  var skills = [];
 
   sheet.rows.forEach(function (row) {
     var o = rowToObj(sheet.header, row);
@@ -138,6 +139,20 @@ function getMyselfData() {
       var key = str(o.key).toLowerCase();
       if (!key) return;
       info.push({ key: key, text: langText(o, "text") });
+
+    } else if (section === "skill") {
+      var skey = str(o.key);
+      if (!skey) return;
+      skills.push({
+        key: skey,
+        title: langText(o, "title"),
+        items: {
+          en: splitLines(o.text_en),
+          vi: splitLines(o.text_vi),
+          ja: splitLines(o.text_ja)
+        },
+        icons: parseIconRows(o.icons)
+      });
 
     } else if (section === "work") {
       var wkey = str(o.key);
@@ -166,10 +181,34 @@ function getMyselfData() {
     else work.push(w);
   });
 
-  return { info: info, work: work };
+  return { info: info, work: work, skills: skills };
 }
 
 /* Ô nhiều dòng (Alt+Enter trong Sheets) → mảng gạch đầu dòng */
 function splitLines(cell) {
   return str(cell).split(/\r?\n/).map(function (s) { return s.trim(); }).filter(function (s) { return s; });
+}
+
+/* Cột icons: mỗi DÒNG trong ô = 1 hàng icon; icon cách nhau dấu phẩy.
+ * Cú pháp 1 icon:  file.png | wide | border | alt text
+ *   - wide   → icon ngang (47x35)
+ *   - border → có viền xanh (như CapCut, Blender)
+ *   - đoạn khác wide/border → dùng làm alt text
+ * → [[{file, wide, border, alt}, ...], ...] */
+function parseIconRows(cell) {
+  return splitLines(cell).map(function (line) {
+    return line.split(",").map(function (part) {
+      var bits = part.split("|").map(function (x) { return str(x); });
+      var file = bits[0];
+      if (!file) return null;
+      var icon = { file: file, wide: false, border: false, alt: "" };
+      bits.slice(1).forEach(function (flag) {
+        var f = flag.toLowerCase();
+        if (f === "wide") icon.wide = true;
+        else if (f === "border") icon.border = true;
+        else if (flag) icon.alt = flag;
+      });
+      return icon;
+    }).filter(function (x) { return x; });
+  }).filter(function (row) { return row.length; });
 }
