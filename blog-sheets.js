@@ -1,11 +1,10 @@
 /**
  * blog-sheets.js — fetch data từ Google Sheets AppScript
+ * URL cấu hình trong sheets-config.js (phải nạp trước file này)
  */
 
-const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzMT1a7pFMZdMXxSltrDAtuO03Jr2aG0q8TeC40xZ5nS7zjBLhSKcoSDNb817kifeq2/exec";
-
 (function () {
-  if (!SHEETS_URL) return;
+  if (typeof SHEETS_URL === "undefined" || !SHEETS_URL) return;
 
   // ── Hiện skeleton ngay lập tức trong lúc chờ Sheets ──────
   function showSkeleton() {

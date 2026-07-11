@@ -1,6 +1,10 @@
-# Hướng dẫn kết nối Blog với Google Sheets (Apps Script CMS)
+# Hướng dẫn kết nối Blog & Myself với Google Sheets (Apps Script CMS)
 
-Tài liệu này mô tả cách phần **Blog** của website (`1.0_Blog_EN`, `2.0_Blog_VI`, `3.0_Blog_JP`) lấy dữ liệu từ Google Sheets thông qua Google Apps Script, và cách cấu hình/khôi phục hệ thống này khi cần.
+Tài liệu này mô tả cách phần **Blog** (`1.0_Blog_EN`, `2.0_Blog_VI`, `3.0_Blog_JP`) và phần **Myself** (`1.4_Myself_EN`, `2_Myself_VI`, `3_Myself_JP`) lấy dữ liệu từ Google Sheets thông qua Google Apps Script, và cách cấu hình/khôi phục hệ thống này khi cần.
+
+> **Code Apps Script hoàn chỉnh nằm trong file `apps-script/Code.gs`** của repo — khi cần chỉ việc copy toàn bộ file đó dán vào trình soạn thảo Apps Script.
+>
+> URL Web App được cấu hình tại **`sheets-config.js`** (dùng chung cho cả Blog và Myself).
 
 ---
 
@@ -29,7 +33,7 @@ blog-render.js  (dựng HTML theo layout)
 
 ## 2. Cấu trúc Google Sheet
 
-Sheet đang dùng là **sheet đang active** của Spreadsheet (`getActiveSpreadsheet().getActiveSheet()`), tức là **tab đầu tiên/đang mở** — không phải theo tên. Nếu đổi tên hoặc thêm nhiều tab, hãy đảm bảo tab chứa dữ liệu blog là tab đang active khi lưu, hoặc sửa script để chỉ định `getSheetByName("TênTab")`.
+Script mới (`apps-script/Code.gs`) đọc dữ liệu blog từ tab tên **"Blog"**. Nếu không có tab tên "Blog", script tự dùng **tab đầu tiên** của Spreadsheet (tương thích với setup cũ). Khuyến nghị: đổi tên tab blog thành "Blog" và giữ nó ở vị trí đầu tiên.
 
 Hàng đầu tiên là **header**, tên cột **không phân biệt hoa thường** (script tự `toLowerCase()`). Các cột cần có:
 
@@ -104,7 +108,7 @@ blog5-1.jpg|1:1, blog5-2.jpg|1:1, blog5-3.jpg|1:1
 ## 5. Thiết lập Google Apps Script (deploy Web App)
 
 1. Mở Google Sheet chứa dữ liệu blog → **Extensions (Tiện ích mở rộng) → Apps Script**.
-2. Xoá code mẫu, dán vào **toàn bộ đoạn code** `doGet(e)` + `formatDate()` (bản bạn đang dùng).
+2. Xoá code cũ, dán vào **toàn bộ nội dung file `apps-script/Code.gs`** trong repo.
 3. Bấm **Deploy → New deployment**.
 4. Chọn loại **Web app**.
    - **Execute as**: Me (tài khoản sở hữu Sheet).
@@ -114,7 +118,7 @@ blog5-1.jpg|1:1, blog5-2.jpg|1:1, blog5-3.jpg|1:1
    ```
    https://script.google.com/macros/s/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/exec
    ```
-7. Dán URL này vào biến `SHEETS_URL` trong file `blog-sheets.js` ở gốc project:
+7. Dán URL này vào biến `SHEETS_URL` trong file **`sheets-config.js`** ở gốc project (dùng chung cho Blog và Myself):
    ```js
    const SHEETS_URL = "https://script.google.com/macros/s/.../exec";
    ```
@@ -179,3 +183,59 @@ Apps Script sắp xếp theo phần số trong `id`, **giảm dần** (id số l
 | Bài hiện sai layout / không hiện | Giá trị `layout` không khớp bảng mục 3 | Sửa lại đúng giá trị (`1`–`10`, `video`, `video-v`, `photo-video`) |
 | Sửa Sheet nhưng web không cập nhật | Trình duyệt cache response fetch | Hard refresh (Ctrl/Cmd + Shift + R) |
 | Sửa Apps Script nhưng không có hiệu lực | Chưa tạo **New version** khi deploy lại | Deploy → Manage deployments → New version |
+
+---
+
+## 11. Trang Myself — chỉnh sửa qua Google Sheets
+
+Trang Myself (3 ngôn ngữ) đọc **khối thông tin cá nhân** và **khối Work Experience** từ tab **"Myself"** trong cùng Spreadsheet với blog. Phần kỹ năng (icon) và ảnh cooperation vẫn nằm tĩnh trong HTML.
+
+**Khác với Blog:** nội dung tĩnh trong HTML được giữ làm **fallback** — nếu fetch lỗi hoặc tab "Myself" chưa tồn tại, trang hiển thị nội dung cũ như bình thường, không bị trống.
+
+### 11.1. Luồng hoạt động
+
+```
+Tab "Myself" trong Google Sheet
+        │
+        ▼
+Apps Script doGet(?page=myself) → JSON { info, work }
+        │
+        ▼
+myself-sheets.js → thay nội dung <ul> thông tin + các khối work-exp
+```
+
+### 11.2. Thiết lập lần đầu
+
+1. Mở Spreadsheet blog → tạo tab mới, đặt tên đúng là **`Myself`**. Đổi tên tab blog cũ thành **`Blog`** (giữ ở vị trí đầu).
+2. Import file **`apps-script/myself-tab-mau.csv`** vào tab này (File → Import → Upload → chọn "Replace current sheet" khi đang đứng ở tab Myself). File mẫu đã chứa toàn bộ nội dung hiện tại của trang (EN/VI/JA).
+3. Dán **toàn bộ `apps-script/Code.gs`** vào Apps Script (thay code cũ).
+4. Deploy → Manage deployments → ✏️ → **New version** → Deploy (giữ nguyên URL cũ).
+5. Kiểm tra: mở `SHEETS_URL?page=myself` trên trình duyệt → thấy JSON `{info: [...], work: [...]}` là đúng.
+
+### 11.3. Cấu trúc tab "Myself"
+
+Hàng đầu là header (không phân biệt hoa thường). Các cột:
+
+| Cột | Áp dụng | Mô tả |
+|---|---|---|
+| `section` | ✅ mọi dòng | `info` (thông tin cá nhân) hoặc `work` (kinh nghiệm) |
+| `key` | ✅ mọi dòng | Với `info`: `birthday`, `phone`, `email`, `address` (hoặc key mới tùy ý). Với `work`: mã bất kỳ, duy nhất (vd `w1`, `w2`) |
+| `parent` | chỉ `work` | Để trống = công ty. Điền `key` của công ty = dự án con hiển thị bên trong công ty đó |
+| `title_en/vi/ja` | chỉ `work` | Tên công ty / dự án theo ngôn ngữ |
+| `period_en/vi/ja` | chỉ `work` | Thời gian, vd `2020 - Present` / `2020 - Nay` / `2020年〜現在`. Tự bọc trong ngoặc khi hiển thị |
+| `text_en/vi/ja` | mọi dòng | Với `info`: giá trị hiển thị. Với `work`: các gạch đầu dòng — **mỗi dòng 1 gạch**, xuống dòng trong ô bằng **Alt+Enter** (Mac: Cmd+Enter) |
+
+Quy tắc chung:
+- Ngôn ngữ nào để trống → tự fallback về `text_en` (giống blog). Giá trị giống nhau cả 3 thứ tiếng (SĐT, email...) chỉ cần điền cột `_en`.
+- **Thứ tự hiển thị = thứ tự dòng trong Sheet** (không sắp xếp theo id như blog). Muốn công ty nào lên đầu thì kéo dòng lên trên.
+- `key` của `info` quyết định cách render: `email` → link mailto, `birthday` dạng `DD.MM.YYYY` → thẻ `<time>`, còn lại hiển thị chữ thường. Thêm dòng `info` với key mới (vd `website`) sẽ hiện thành một dòng mới trong danh sách.
+- Thêm công ty mới: thêm 1 dòng `section=work`, `key` mới (vd `w7`), điền title/period/text. Thêm dự án con: thêm dòng với `parent` = key công ty.
+
+### 11.4. Lỗi thường gặp (Myself)
+
+| Hiện tượng | Nguyên nhân | Xử lý |
+|---|---|---|
+| Trang vẫn hiện nội dung cũ | Fetch lỗi → đang dùng fallback tĩnh | Xem Console: `myself-sheets: dùng nội dung tĩnh...`; kiểm tra tab tên đúng `Myself`, đã deploy New version chưa |
+| Dự án con không nằm trong công ty | `parent` sai/không khớp `key` nào | Sửa `parent` đúng bằng `key` của công ty |
+| Gạch đầu dòng dính thành 1 dòng | Các ý không được xuống dòng trong ô | Dùng Alt+Enter (Cmd+Enter trên Mac) giữa các ý |
+| JSON trả về `{error: ...}` | Chưa tạo tab `Myself` | Tạo tab đúng tên |
