@@ -157,10 +157,16 @@ img { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;
 /* ═══════════════════════════════════════════
    RESPONSIVE — dùng chung
    ═══════════════════════════════════════════ */
+@media (max-width: 1440px) {
+  .primary-nav { gap: 28px; }
+}
 @media (max-width: 1200px) {
   .header-container { padding: 0 24px; }
-  .primary-nav { gap: 24px; font-size: 15px; }
+  .primary-nav { gap: 20px; font-size: 15px; }
   .brand { font-size: 16px; letter-spacing: .14em; }
+}
+@media (max-width: 1024px) {
+  .primary-nav { gap: 14px; font-size: 14px; }
 }
 @media (max-width: 768px) {
   .primary-nav { display: none; }

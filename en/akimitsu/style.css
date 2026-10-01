@@ -1,0 +1,185 @@
+/* ============================================================
+   AKIMITSU CASE STUDY — toàn bộ CSS nằm trong .akm-case
+   Khối này độc lập, không ảnh hưởng tới style chung của web.
+   ============================================================ */
+.akm-case{
+  --akm-bg:#080b16;
+  --akm-card:rgba(255,255,255,.035);
+  --akm-line:rgba(255,255,255,.1);
+  --akm-line-soft:rgba(255,255,255,.06);
+  --akm-fg:#eef1f8;
+  --akm-muted:#99a1b8;
+  --akm-dim:#6c7490;
+  --akm-a:#ff4d8d;
+  --akm-b:#8b5cf6;
+  --akm-c:#22d3ee;
+  --akm-ok:#34d399;
+  --akm-max:1120px;
+  --akm-r:18px;
+
+  background:var(--akm-bg);
+  color:var(--akm-fg);
+  font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:16px;
+  line-height:1.78;
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+  overflow-x:hidden;
+}
+.akm-case *,.akm-case *::before,.akm-case *::after{box-sizing:border-box}
+.akm-case p,.akm-case h1,.akm-case h2,.akm-case h3,.akm-case ul,.akm-case ol,.akm-case dl,.akm-case dd{margin:0}
+.akm-case ul,.akm-case ol{padding:0;list-style:none}
+.akm-case a{color:inherit;text-decoration:none}
+.akm-case img{max-width:100%;display:block}
+
+/* ---------- nền ---------- */
+.akm-case::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(70ch 55ch at 12% -8%,rgba(255,77,141,.16),transparent 62%),
+    radial-gradient(60ch 50ch at 92% 4%,rgba(139,92,246,.17),transparent 60%),
+    radial-gradient(70ch 60ch at 50% 100%,rgba(34,211,238,.08),transparent 62%);
+}
+.akm-grid-bg{
+  position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(var(--akm-line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--akm-line-soft) 1px,transparent 1px);
+  background-size:72px 72px;
+  mask-image:linear-gradient(to bottom,#000,transparent 72%);
+  -webkit-mask-image:linear-gradient(to bottom,#000,transparent 72%);
+}
+
+/* ---------- layout ---------- */
+.akm-wrap{position:relative;z-index:1;max-width:var(--akm-max);margin:0 auto;padding:0 24px}
+.akm-sec{position:relative;z-index:1;padding:88px 0}
+.akm-sec--tight{padding:56px 0}
+.akm-rule{height:1px;background:linear-gradient(90deg,transparent,var(--akm-line),transparent);border:0;margin:0}
+
+.akm-eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--akm-muted);margin-bottom:18px;
+}
+.akm-eyebrow::before{content:"";width:26px;height:1px;background:linear-gradient(90deg,var(--akm-a),var(--akm-b))}
+
+.akm-h2{font-size:clamp(28px,4.4vw,42px);font-weight:800;line-height:1.28;letter-spacing:-.02em}
+.akm-h3{font-size:19px;font-weight:700;line-height:1.45;letter-spacing:-.01em}
+.akm-lead{color:var(--akm-muted);font-size:17px;line-height:1.8;max-width:66ch;margin-top:16px}
+.akm-grad{background:linear-gradient(100deg,var(--akm-a),var(--akm-b) 52%,var(--akm-c));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---------- hero ---------- */
+/* padding-top chừa chỗ cho .site-header cố định (70px) của web chính */
+.akm-hero{position:relative;z-index:1;padding:166px 0 72px}
+.akm-tagline{
+  display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 8px;
+  border:1px solid var(--akm-line);border-radius:999px;background:rgba(255,255,255,.04);
+  font-size:12.5px;color:var(--akm-muted);backdrop-filter:blur(8px);
+}
+.akm-dot{width:7px;height:7px;border-radius:50%;background:var(--akm-ok);box-shadow:0 0 0 4px rgba(52,211,153,.16);flex:none}
+.akm-h1{margin-top:26px;font-size:clamp(38px,6.6vw,68px);font-weight:800;line-height:1.22;letter-spacing:-.035em;max-width:16ch}
+.akm-hero-sub{margin-top:24px;max-width:56ch;font-size:18px;line-height:1.8;color:var(--akm-muted)}
+.akm-hero-sub b{color:var(--akm-fg);font-weight:600}
+
+.akm-meta{margin-top:44px;display:grid;gap:1px;background:var(--akm-line-soft);border:1px solid var(--akm-line-soft);border-radius:var(--akm-r);overflow:hidden;grid-template-columns:repeat(4,1fr)}
+.akm-meta div{background:var(--akm-bg);padding:18px 20px}
+.akm-meta dt{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--akm-dim);font-weight:600}
+.akm-meta dd{margin-top:7px;font-size:14.5px;font-weight:500}
+
+.akm-cta{margin-top:34px;display:flex;flex-wrap:wrap;gap:12px}
+.akm-btn{
+  display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:12px;
+  font-size:14.5px;font-weight:600;border:1px solid transparent;transition:.2s ease;
+}
+.akm-btn--p{background:linear-gradient(100deg,var(--akm-a),var(--akm-b));color:#fff;box-shadow:0 10px 30px -12px rgba(255,77,141,.6)}
+.akm-btn--p:hover{transform:translateY(-2px);box-shadow:0 16px 36px -12px rgba(255,77,141,.7)}
+.akm-btn--g{border-color:var(--akm-line);color:var(--akm-fg);background:rgba(255,255,255,.03)}
+.akm-btn--g:hover{background:rgba(255,255,255,.07);transform:translateY(-2px)}
+
+/* ---------- số liệu ---------- */
+.akm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.akm-stat{
+  border:1px solid var(--akm-line-soft);border-radius:var(--akm-r);padding:24px 22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+}
+.akm-stat b{display:block;font-size:clamp(28px,3.6vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.2}
+.akm-stat span{display:block;margin-top:10px;font-size:13px;color:var(--akm-muted);line-height:1.65}
+
+/* ---------- card ---------- */
+.akm-cards{display:grid;gap:18px;margin-top:44px}
+.akm-cards--2{grid-template-columns:repeat(2,1fr)}
+.akm-cards--3{grid-template-columns:repeat(3,1fr)}
+.akm-card{
+  border:1px solid var(--akm-line-soft);border-radius:var(--akm-r);padding:28px 26px;
+  background:var(--akm-card);transition:border-color .22s ease,transform .22s ease;
+}
+.akm-card:hover{border-color:var(--akm-line);transform:translateY(-3px)}
+.akm-card p{margin-top:12px;color:var(--akm-muted);font-size:14.6px;line-height:1.8}
+.akm-num{
+  display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;
+  background:rgba(255,77,141,.12);border:1px solid rgba(255,77,141,.28);
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:13px;font-weight:600;color:var(--akm-a);
+  margin-bottom:16px;
+}
+
+/* ---------- stack ---------- */
+.akm-stack{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.akm-chip{
+  padding:8px 14px;border:1px solid var(--akm-line);border-radius:10px;background:rgba(255,255,255,.03);
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12.5px;color:var(--akm-muted);
+}
+
+/* ---------- luồng vé ---------- */
+.akm-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:40px}
+.akm-step{position:relative;border:1px solid var(--akm-line-soft);border-radius:14px;padding:20px 18px;background:var(--akm-card)}
+.akm-step::after{content:"";position:absolute;top:50%;right:-13px;width:14px;height:1px;background:var(--akm-line);z-index:2}
+.akm-flow .akm-step:last-child::after{display:none}
+.akm-step i{font-style:normal;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--akm-c);font-weight:600;letter-spacing:.1em}
+.akm-step strong{display:block;margin-top:9px;font-size:14.5px;font-weight:600;line-height:1.5;letter-spacing:-.01em}
+.akm-step span{display:block;margin-top:7px;font-size:12.8px;color:var(--akm-dim);line-height:1.7}
+
+/* ---------- danh sách ---------- */
+.akm-learn{display:grid;gap:0;margin-top:40px;border-top:1px solid var(--akm-line-soft)}
+.akm-learn li{padding:26px 0;border-bottom:1px solid var(--akm-line-soft);display:grid;grid-template-columns:48px 1fr;gap:24px}
+.akm-learn i{font-style:normal;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--akm-dim);padding-top:4px}
+.akm-learn strong{display:block;font-size:16.5px;font-weight:600;line-height:1.55;letter-spacing:-.01em}
+.akm-learn p{margin-top:8px;color:var(--akm-muted);font-size:14.6px;line-height:1.8;max-width:70ch}
+
+/* ---------- kết ---------- */
+.akm-end{
+  border:1px solid var(--akm-line);border-radius:26px;padding:60px 48px;text-align:center;
+  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.012));
+  max-width:var(--akm-max);margin:0 auto;position:relative;z-index:1;
+}
+.akm-end h2{font-size:clamp(26px,3.6vw,36px);font-weight:800;line-height:1.3;letter-spacing:-.025em}
+.akm-end p{margin-top:16px;color:var(--akm-muted);line-height:1.8;max-width:54ch;margin-left:auto;margin-right:auto}
+.akm-end .akm-cta{justify-content:center}
+.akm-foot{padding:44px 0 72px;text-align:center;color:var(--akm-dim);font-size:13px;position:relative;z-index:1}
+
+/* ---------- reveal ---------- */
+.akm-rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.akm-rv.akm-in{opacity:1;transform:none}
+
+/* ---------- nối với layout web chính ---------- */
+.akimitsu-page{background:#080b16}
+.akimitsu-page .footer__divider{margin:0;border-top-color:rgba(255,255,255,.12)}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .akm-meta{grid-template-columns:repeat(2,1fr)}
+  .akm-stats{grid-template-columns:repeat(2,1fr)}
+  .akm-cards--3,.akm-cards--2{grid-template-columns:1fr}
+  .akm-flow{grid-template-columns:1fr}
+  .akm-step::after{display:none}
+}
+@media (max-width:620px){
+  .akm-wrap{padding:0 18px}
+  .akm-sec{padding:64px 0}
+  .akm-hero{padding:124px 0 48px}
+  .akm-stats{grid-template-columns:1fr}
+  .akm-card{padding:24px 20px}
+  .akm-end{padding:44px 24px;border-radius:20px;margin:0 18px}
+  .akm-learn li{grid-template-columns:1fr;gap:6px}
+}
+@media (prefers-reduced-motion:reduce){
+  .akm-case *{animation:none!important;transition:none!important}
+  .akm-rv{opacity:1;transform:none}
+}
