@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/shared.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Bản đồ quản lý BĐS Hòa Lạc – DO MANH HUONG</title>
+    <link rel="icon" type="image/png" href="/image/icon-favicon.png" />
+    <link rel="apple-touch-icon" href="/image/icon-favicon.png" />
+    <meta name="description" content="Nền tảng quản lý bảng hàng bất động sản theo không gian địa lý, xây riêng cho khu vực Hòa Lạc. Mỗi bất động sản là một marker trên bản đồ." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="DO MANH HUONG" />
+    <meta property="og:title" content="Bản đồ quản lý BĐS Hòa Lạc – DO MANH HUONG" />
+    <meta property="og:description" content="Nền tảng quản lý bảng hàng bất động sản theo không gian địa lý, xây riêng cho khu vực Hòa Lạc. Mỗi bất động sản là một marker trên bản đồ." />
+    <meta property="og:url" content="https://huongdm.com/vi/hoalac-property-map/" />
+    <meta property="og:image" content="https://huongdm.com/image/Blog/1_Banner_2.jpg" />
+    <meta property="og:locale" content="vi_VN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://huongdm.com/vi/hoalac-property-map/" />
+    <link rel="alternate" hreflang="en" href="https://huongdm.com/en/hoalac-property-map/" />
+    <link rel="alternate" hreflang="vi" href="https://huongdm.com/vi/hoalac-property-map/" />
+    <link rel="alternate" hreflang="ja" href="https://huongdm.com/ja/hoalac-property-map/" />
+    <link rel="alternate" hreflang="x-default" href="https://huongdm.com/en/hoalac-property-map/" />
+  </head>
+  <body class="hoalac-page">
+
+    <header class="site-header">
+      <div class="header-container">
+        <a href="/vi/blog/" class="brand">DO MANH HUONG</a>
+        <nav class="primary-nav" aria-label="Main navigation">
+          <a href="/vi/blog/" class="nav-item">Blog</a>
+          <a href="/vi/tomo/" class="nav-item">Tomo</a>
+          <a href="/vi/mangac/" class="nav-item">MangaC</a>
+          <a href="/vi/short-film/" class="nav-item">Short film "Doat Hon"</a>
+          <a href="/vi/akimitsu/" class="nav-item">Web Akimitsu</a>
+          <a href="/vi/hoalac-property-map/" class="nav-item active">Hoa Lac Map</a>
+          <a href="/vi/myself/" class="nav-item">Myself</a>
+        </nav>
+        <div class="lang-right">
+          <button class="hamburger" id="hamburger" aria-expanded="false" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+          <div class="lang-switch">
+            <button class="lang-btn" id="langToggle" type="button" aria-haspopup="true" aria-expanded="false">
+              VI <span class="arrow"></span>
+            </button>
+            <ul class="lang-menu" id="langMenu" role="menu" aria-labelledby="langToggle">
+              <li role="none"><a role="menuitem" href="/en/hoalac-property-map/">EN</a></li>
+              <li role="none"><a role="menuitem" href="/vi/hoalac-property-map/">VI</a></li>
+              <li role="none"><a role="menuitem" href="/ja/hoalac-property-map/">JP</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <nav class="mobile-nav" id="mobileMenu" aria-label="Mobile navigation">
+          <a href="/vi/blog/" class="nav-item">Blog</a>
+          <a href="/vi/tomo/" class="nav-item">Tomo</a>
+          <a href="/vi/mangac/" class="nav-item">MangaC</a>
+          <a href="/vi/short-film/" class="nav-item">Short film "Doat Hon"</a>
+          <a href="/vi/akimitsu/" class="nav-item">Web Akimitsu</a>
+          <a href="/vi/hoalac-property-map/" class="nav-item active">Hoa Lac Map</a>
+          <a href="/vi/myself/" class="nav-item">Myself</a>
+    </nav>
+
+    <main id="bdsmap-page">
+
+      <!-- ====================== HERO ====================== -->
+      <header class="bm-hero">
+        <div class="bm-wrap">
+          <div class="bm-coords">
+          <span>21.0128° N &nbsp;·&nbsp; 105.5215° E</span>
+          <span>Hòa Lạc — Thạch Thất, Hà Nội</span>
+          <span>Dự án cá nhân · 2026</span>
+          </div>
+
+          <h1>Bảng hàng bất động sản, đặt đúng chỗ <em>trên bản đồ</em>.</h1>
+
+          <p class="bm-hero-sub">Hệ thống quản lý và tra cứu bất động sản theo không gian địa lý, xây riêng cho khu vực Hòa Lạc. Mỗi bất động sản là một marker — xem nhanh bằng popup, mở trang chi tiết, tìm và lọc ngay trên bản đồ.</p>
+
+          <p class="bm-hero-not"><b>Không phải</b> một website đăng tin. Đây là công cụ thay thế file Excel và nhóm chat — bản đồ chính là giao diện quản lý bảng hàng.</p>
+
+          <div class="bm-cta">
+            <a class="bm-btn bm-btn--primary" href="#demo">
+              Xem cách hoạt động
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 8h8M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="bm-btn bm-btn--ghost" href="#lotrinh">Lộ trình 5 giai đoạn</a>
+          </div>
+
+          <dl class="bm-meta">
+          <div><dt>Vai trò</dt><dd>Product &amp; Development</dd></div>
+          <div><dt>Giai đoạn</dt><dd>1 — Proof of Concept</dd></div>
+          <div><dt>Phạm vi</dt><dd>Riêng Hòa Lạc</dd></div>
+          <div><dt>Người dùng đầu</dt><dd>Môi giới nội bộ</dd></div>
+          </dl>
+
+          <!-- ---------- map mockup ---------- -->
+          <div class="bm-demo" id="demo" data-reveal>
+            <div class="bm-frame">
+              <div class="bm-bar">
+                <div class="bm-dots"><i></i><i></i><i></i></div>
+                <div class="bm-search">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4.6" stroke="currentColor" stroke-width="1.5"/><path d="m10.6 10.6 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <span>Tìm theo mã căn, diện tích, mức giá…</span>
+                </div>
+                <div class="bm-chips">
+              <span class="bm-chip bm-chip--on">Tất cả</span>
+              <span class="bm-chip">Biệt thự</span>
+              <span class="bm-chip">Đất nền</span>
+                </div>
+              </div>
+
+              <div class="bm-stage">
+                <div class="bm-canvas" id="bmCanvas">
+                  <svg viewBox="0 0 800 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                    <defs>
+                      <pattern id="bmGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M40 0H0v40" fill="none" stroke="#D5E0D5" stroke-width="1"/>
+                      </pattern>
+                    </defs>
+                    <rect width="800" height="460" fill="#E9EFE9"/>
+                    <rect width="800" height="460" fill="url(#bmGrid)"/>
+                    <path d="M0 300 Q140 250 250 300 T520 330 L540 460 L0 460Z" fill="#DCE8D8"/>
+                    <circle cx="660" cy="110" r="95" fill="#DCE8D8"/>
+                    <path d="M-20 90 Q150 150 330 110 T800 160" stroke="#C3DBE4" stroke-width="22" fill="none" stroke-linecap="round"/>
+                    <path d="M-20 230 Q220 200 420 250 T820 240" stroke="#FFFFFF" stroke-width="16" fill="none"/>
+                    <path d="M-20 230 Q220 200 420 250 T820 240" stroke="#E8B04B" stroke-width="3" fill="none" stroke-dasharray="14 10"/>
+                    <path d="M300 -20 L340 480" stroke="#FFFFFF" stroke-width="11" fill="none"/>
+                    <path d="M560 -20 Q540 200 600 480" stroke="#FFFFFF" stroke-width="9" fill="none"/>
+                    <path d="M-20 380 L820 350" stroke="#FFFFFF" stroke-width="7" fill="none"/>
+                    <g fill="none" stroke="#B9C9B9" stroke-width="1.5">
+                      <rect x="80" y="280" width="62" height="48"/><rect x="142" y="280" width="62" height="48"/>
+                      <rect x="80" y="328" width="62" height="48"/><rect x="142" y="328" width="62" height="48"/>
+                      <rect x="620" y="270" width="70" height="54"/><rect x="690" y="270" width="70" height="54"/>
+                    </g>
+                    <text x="118" y="188" font-family="monospace" font-size="12" fill="#8FA695">ĐẠI LỘ THĂNG LONG</text>
+                    <text x="596" y="92" font-family="monospace" font-size="12" fill="#8FA695">KCN HÒA LẠC</text>
+                  </svg>
+
+                <button class="bm-pin" type="button" data-i="0" data-kind="bt" style="left:21%;top:70%" aria-pressed="false" aria-label="XV-A12">
+                  <svg viewBox="0 0 26 34"><path class="bm-pin-body" d="M13 0C5.8 0 0 5.8 0 13c0 9.3 11.4 20 12 20.6.5.5 1.4.3 1.8-.2C14.6 33 26 22.3 26 13 26 5.8 20.2 0 13 0Z"/><circle cx="13" cy="13" r="4.6" fill="#fff"/></svg>
+                </button>
+                <button class="bm-pin" type="button" data-i="1" data-kind="bt" style="left:42%;top:46%" aria-pressed="true" aria-label="XV-B07">
+                  <svg viewBox="0 0 26 34"><path class="bm-pin-body" d="M13 0C5.8 0 0 5.8 0 13c0 9.3 11.4 20 12 20.6.5.5 1.4.3 1.8-.2C14.6 33 26 22.3 26 13 26 5.8 20.2 0 13 0Z"/><circle cx="13" cy="13" r="4.6" fill="#fff"/></svg>
+                </button>
+                <button class="bm-pin" type="button" data-i="2" data-kind="dat" style="left:63%;top:76%" aria-pressed="false" aria-label="TH-114">
+                  <svg viewBox="0 0 26 34"><path class="bm-pin-body" d="M13 0C5.8 0 0 5.8 0 13c0 9.3 11.4 20 12 20.6.5.5 1.4.3 1.8-.2C14.6 33 26 22.3 26 13 26 5.8 20.2 0 13 0Z"/><circle cx="13" cy="13" r="4.6" fill="#fff"/></svg>
+                </button>
+                <button class="bm-pin" type="button" data-i="3" data-kind="dat" style="left:82%;top:38%" aria-pressed="false" aria-label="TX-208">
+                  <svg viewBox="0 0 26 34"><path class="bm-pin-body" d="M13 0C5.8 0 0 5.8 0 13c0 9.3 11.4 20 12 20.6.5.5 1.4.3 1.8-.2C14.6 33 26 22.3 26 13 26 5.8 20.2 0 13 0Z"/><circle cx="13" cy="13" r="4.6" fill="#fff"/></svg>
+                </button>
+                <button class="bm-pin" type="button" data-i="4" data-kind="bt" style="left:33%;top:24%" aria-pressed="false" aria-label="XV-C03">
+                  <svg viewBox="0 0 26 34"><path class="bm-pin-body" d="M13 0C5.8 0 0 5.8 0 13c0 9.3 11.4 20 12 20.6.5.5 1.4.3 1.8-.2C14.6 33 26 22.3 26 13 26 5.8 20.2 0 13 0Z"/><circle cx="13" cy="13" r="4.6" fill="#fff"/></svg>
+                </button>
+
+                  <div class="bm-pop" id="bmPop" style="left:42%;top:46%">
+                    <div class="bm-pop-code" id="bmPopCode">XV-B07</div>
+                    <h4 id="bmPopName">Biệt thự song lập, hướng Đông Nam</h4>
+                    <dl>
+                    <dt>Diện tích</dt><dd id="bmPopArea">180 m²</dd>
+                    <dt>Giá</dt><dd id="bmPopPrice">12,8 tỷ</dd>
+                    <dt>Trạng thái</dt><dd id="bmPopStatus">Còn hàng</dd>
+                    </dl>
+                    <span class="bm-pop-link">Mở trang chi tiết →</span>
+                  </div>
+                </div>
+
+                <div class="bm-list">
+                  <div class="bm-list-head">Bảng hàng · 5 / 128</div>
+                  <div id="bmRows"></div>
+                </div>
+              </div>
+
+              <div class="bm-foot">
+                <span>128 BĐS · 1 khu vực · cập nhật 02.10.2026</span>
+                <span>Hòa Lạc</span>
+              </div>
+            </div>
+            <p class="bm-demo-note">Giao diện mô phỏng — dữ liệu minh hoạ</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- ====================== PROBLEM ====================== -->
+      <section class="bm-sec" style="padding-top:140px">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">Vấn đề</span>
+            <h2>Bảng hàng đang nằm rải rác ở mọi nơi trừ chỗ cần thiết</h2>
+            <p class="bm-lead">Môi giới Hòa Lạc hiện quản lý nguồn hàng bằng Excel, Zalo và nhóm chat. Hệ quả là mất thời gian ở đúng khâu quan trọng nhất: tư vấn khách.</p>
+          </div>
+
+          <ul class="bm-prob" data-reveal>
+            <li><span class="bm-num">01</span><div><strong>Dữ liệu phân mảnh</strong><p>Bảng hàng nằm ở nhiều file, nhiều nhóm chat, nhiều máy khác nhau.</p></div></li>
+            <li><span class="bm-num">02</span><div><strong>Trùng lặp liên tục</strong><p>Cùng một lô đất xuất hiện ở nhiều bảng với thông tin lệch nhau.</p></div></li>
+            <li><span class="bm-num">03</span><div><strong>Khó tìm đúng hàng</strong><p>Lọc theo nhu cầu khách trên Excel vừa chậm vừa dễ bỏ sót.</p></div></li>
+            <li><span class="bm-num">04</span><div><strong>Không hình dung được vị trí</strong><p>Toạ độ nằm trong đầu người bán, không nằm trong dữ liệu.</p></div></li>
+            <li><span class="bm-num">05</span><div><strong>Chia sẻ thiếu trực quan</strong><p>Gửi khách một dòng Excel không trả lời được câu “nó ở chỗ nào?”.</p></div></li>
+            <li><span class="bm-num">06</span><div><strong>Mỗi người một bảng</strong><p>Không có nguồn dữ liệu chung, đồng bộ gần như thủ công.</p></div></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ====================== SOLUTION ====================== -->
+      <section class="bm-sec bm-sec--tight">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">Giải pháp</span>
+            <h2>Đổi giao diện quản lý từ bảng tính sang bản đồ</h2>
+            <p class="bm-lead">Mọi bất động sản được hiển thị đúng vị trí thật của nó. Bản đồ không phải một tính năng phụ — nó là màn hình làm việc chính.</p>
+          </div>
+
+          <div class="bm-switch" data-reveal>
+            <div class="bm-card bm-card--bad">
+              <h3>Trước · Excel &amp; Zalo</h3>
+              <ul>
+                <li>Đọc toạ độ bằng cách nhớ</li>
+                <li>Lọc bằng cuộn và Ctrl+F</li>
+                <li>Mỗi nhân viên một bản sao</li>
+                <li>Khách phải tự hình dung vị trí</li>
+              </ul>
+            </div>
+            <div class="bm-arrow">→</div>
+            <div class="bm-card bm-card--good">
+              <h3>Sau · Bản đồ tương tác</h3>
+              <ul>
+                <li>Nhìn là thấy phân bố nguồn hàng</li>
+                <li>Lọc và tìm ngay trên bản đồ</li>
+                <li>Một bảng hàng dùng chung</li>
+                <li>Mở popup là biết chỗ nào, cạnh gì</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================== FLOW ====================== -->
+      <section class="bm-sec bm-sec--tight">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">Luồng sử dụng · Giai đoạn 1</span>
+            <h2>Bốn bước, không cần hướng dẫn</h2>
+            <p class="bm-lead">Người dùng là dân kinh doanh, không rành công nghệ. Mỗi thao tác phải nhanh hơn mở file Excel.</p>
+          </div>
+
+          <div class="bm-flow" data-reveal>
+            <article class="bm-step"><div class="bm-step-k">01</div><h3>Marker</h3><p>Mỗi BĐS là một điểm đặt đúng toạ độ thật, phân màu theo loại hình.</p></article>
+            <article class="bm-step"><div class="bm-step-k">02</div><h3>Popup</h3><p>Chạm vào marker để xem nhanh mã căn, diện tích, giá và trạng thái.</p></article>
+            <article class="bm-step"><div class="bm-step-k">03</div><h3>Trang chi tiết</h3><p>Mở đầy đủ thông tin, hình ảnh và ghi chú của bất động sản.</p></article>
+            <article class="bm-step"><div class="bm-step-k">04</div><h3>Tìm &amp; lọc</h3><p>Lọc theo nhu cầu khách ngay trên bản đồ, kết quả thu hẹp tức thì.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================== USERS ====================== -->
+      <section class="bm-sec bm-sec--tight">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">Đối tượng sử dụng</span>
+            <h2>Nội bộ trước, hệ sinh thái sau</h2>
+          </div>
+          <div class="bm-users" data-reveal>
+            <div>
+              <span class="bm-tag bm-tag--now">Giai đoạn đầu</span>
+              <ul>
+                <li>Nội bộ công ty bất động sản</li>
+                <li>Nhân viên kinh doanh</li>
+                <li>Trưởng nhóm kinh doanh</li>
+              </ul>
+            </div>
+            <div>
+              <span class="bm-tag bm-tag--next">Giai đoạn sau</span>
+              <ul>
+                <li>Đối tác</li>
+                <li>Công ty môi giới khác</li>
+                <li>Nhà đầu tư</li>
+                <li>Khách hàng</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================== ROADMAP ====================== -->
+      <section class="bm-sec bm-road" id="lotrinh">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">Lộ trình</span>
+            <h2>Năm giai đoạn, mỗi giai đoạn tự chứng minh giá trị</h2>
+            <p class="bm-lead">Không build tính năng của giai đoạn sau khi giai đoạn hiện tại chưa xong.</p>
+          </div>
+
+          <ol class="bm-rail" data-reveal>
+            <li class="bm-phase bm-phase--now">
+              <div class="bm-dot">1</div>
+              <div class="bm-phase-head"><h3>Proof of Concept</h3><span class="bm-badge">Đang làm</span></div>
+              <p class="bm-goal">Mục tiêu: <b>kiểm chứng ý tưởng.</b></p>
+              <div class="bm-tags"><span>Hiển thị bản đồ</span><span>Marker</span><span>Popup</span><span>Trang chi tiết</span></div>
+            </li>
+            <li class="bm-phase">
+              <div class="bm-dot">2</div>
+              <div class="bm-phase-head"><h3>MVP</h3><span class="bm-badge">Kế tiếp</span></div>
+              <p class="bm-goal">Mục tiêu: <b>sử dụng nội bộ trong công ty.</b></p>
+              <div class="bm-tags"><span>Đăng nhập</span><span>Quản lý bảng hàng</span><span>Cập nhật dữ liệu</span><span>Upload dữ liệu</span><span>Quản lý hình ảnh</span></div>
+            </li>
+            <li class="bm-phase">
+              <div class="bm-dot">3</div>
+              <div class="bm-phase-head"><h3>Pilot</h3><span class="bm-badge">Dự kiến</span></div>
+              <p class="bm-goal">Mục tiêu: <b>chứng minh hiệu quả.</b></p>
+              <div class="bm-tags"><span>Triển khai thực tế</span><span>Thu thập phản hồi</span><span>Tối ưu trải nghiệm</span><span>Chuẩn hoá dữ liệu</span></div>
+            </li>
+            <li class="bm-phase">
+              <div class="bm-dot">4</div>
+              <div class="bm-phase-head"><h3>Multi-company Platform</h3><span class="bm-badge">Dự kiến</span></div>
+              <p class="bm-goal">Mục tiêu: <b>hình thành hệ sinh thái.</b></p>
+              <div class="bm-tags"><span>Nhiều công ty</span><span>Phân quyền</span><span>Dữ liệu riêng</span><span>Chia sẻ bảng hàng</span></div>
+            </li>
+            <li class="bm-phase">
+              <div class="bm-dot">5</div>
+              <div class="bm-phase-head"><h3>Hoa Lac Property Ecosystem</h3><span class="bm-badge">Tầm nhìn</span></div>
+              <p class="bm-goal">Mục tiêu: <b>nền tảng dữ liệu BĐS chuyên sâu cho Hòa Lạc.</b></p>
+              <div class="bm-tags"><span>Dữ liệu giá</span><span>Lịch sử giao dịch</span><span>Thống kê</span><span>Phân tích thị trường</span><span>AI hỗ trợ tư vấn</span></div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ====================== PHILOSOPHY ====================== -->
+      <section class="bm-sec">
+        <div class="bm-wrap">
+          <div class="bm-quote" data-reveal>
+            <blockquote>Phát triển theo <em>chiều sâu</em> thay vì chiều rộng.</blockquote>
+            <p>Không cố xây một nền tảng bất động sản cho toàn Việt Nam. Dồn toàn bộ nguồn lực để trở thành nền tảng dữ liệu tốt nhất dành riêng cho Hòa Lạc.</p>
+          </div>
+
+          <ul class="bm-rules" data-reveal>
+            <li><b>Nhỏ nhất có giá trị trước</b><span>Bắt đầu từ phiên bản tối giản nhưng dùng được thật.</span></li>
+            <li><b>Chỉ build khi thực sự cần</b><span>Tính năng phải giải quyết một vấn đề đang có, không phải một vấn đề tưởng tượng.</span></li>
+            <li><b>Kiến trúc mở rộng được</b><span>Schema tính trước multi-company ngay cả khi chưa triển khai.</span></li>
+            <li><b>Dữ liệu là tài sản</b><span>Ưu tiên tính đúng, chống trùng lặp, chuẩn hoá trước khi mở rộng.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ====================== SUCCESS ====================== -->
+      <section class="bm-sec bm-sec--tight">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">Định nghĩa thành công</span>
+            <h2>Bốn câu hỏi dùng để đánh giá mọi quyết định</h2>
+          </div>
+          <ul class="bm-success" data-reveal>
+            <li><b>Tốc độ</b><span>Môi giới tìm được bất động sản nhanh hơn Excel.</span></li>
+            <li><b>Trực quan</b><span>Khách hàng hình dung được vị trí mà không cần giải thích.</span></li>
+            <li><b>Tập trung</b><span>Bảng hàng nằm một chỗ, không còn bản sao trùng lặp.</span></li>
+            <li><b>Mở rộng</b><span>Hệ thống sẵn sàng trở thành nền tảng cho nhiều công ty.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ====================== STACK ====================== -->
+      <section class="bm-sec bm-sec--tight">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">Công nghệ</span>
+            <h2>Stack</h2>
+            <p class="bm-lead">Ưu tiên giải pháp phổ biến, dễ bảo trì, đủ sức mở rộng sang multi-company.</p>
+          </div>
+          <dl class="bm-stack" data-reveal>
+            <div><dt>Frontend</dt><dd><span>Next.js</span><span>TypeScript</span><span>Tailwind</span></dd></div>
+            <div><dt>Bản đồ</dt><dd><span>Leaflet</span><span>OpenStreetMap</span><span>GeoJSON</span></dd></div>
+            <div><dt>Dữ liệu</dt><dd><span>PostgreSQL</span><span>PostGIS</span></dd></div>
+            <div><dt>Hạ tầng</dt><dd><span>Vercel</span><span>Object storage</span></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ====================== END ====================== -->
+      <section class="bm-sec bm-end">
+        <div class="bm-wrap">
+          <span class="bm-legend" data-reveal>Liên hệ</span>
+          <h2 data-reveal>Muốn xem bản chạy thật hoặc trao đổi về dự án?</h2>
+          <p data-reveal>Dự án đang ở giai đoạn Proof of Concept và tiếp tục phát triển. Rất sẵn lòng demo và nhận góp ý.</p>
+          <div class="bm-cta" data-reveal>
+            <a class="bm-btn bm-btn--primary" href="mailto:dragon20011511@gmail.com">Gửi email</a>
+            <a class="bm-btn bm-btn--ghost" href="/vi/myself/">← Về trang giới thiệu</a>
+          </div>
+          <div class="bm-end-meta">
+            <span>Hệ thống bản đồ quản lý BĐS Hòa Lạc</span>
+            <span>21.0128° N · 105.5215° E</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <hr class="footer__divider" />
+    <footer class="site-footer">
+      <div class="footer__inner">
+        <p class="footer__credit">© ハス 2025 | Designed &amp; Built by H.</p>
+        <p class="footer__language">Language:
+          <a href="/vi/hoalac-property-map/" class="footer__lang-link">[VI]</a>
+          <a href="/en/hoalac-property-map/" class="footer__lang-link">[EN]</a>
+          <a href="/ja/hoalac-property-map/" class="footer__lang-link">[JP]</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="/shared.js" defer></script>
+    <script>
+      (function () {
+        var root = document.getElementById("bdsmap-page");
+        if (!root) return;
+
+        var DATA = [
+      { code:"XV-A12", name:"Biệt thự đơn lập, view hồ nội khu", area:"240 m²", price:"18,5 tỷ", status:"Còn hàng" },
+      { code:"XV-B07", name:"Biệt thự song lập, hướng Đông Nam", area:"180 m²", price:"12,8 tỷ", status:"Còn hàng" },
+      { code:"TH-114", name:"Đất nền mặt đường 11m, Thạch Hoà", area:"100 m²", price:"4,2 tỷ", status:"Đang cọc" },
+      { code:"TX-208", name:"Đất thổ cư gần KCN, Tân Xã", area:"320 m²", price:"9,6 tỷ", status:"Còn hàng" },
+      { code:"XV-C03", name:"Biệt thự góc, hai mặt thoáng", area:"265 m²", price:"21,0 tỷ", status:"Giữ chỗ" }
+        ];
+
+        var pins = Array.prototype.slice.call(root.querySelectorAll(".bm-pin"));
+        var pop = document.getElementById("bmPop");
+        var rowsEl = document.getElementById("bmRows");
+        var fields = {
+          code: document.getElementById("bmPopCode"),
+          name: document.getElementById("bmPopName"),
+          area: document.getElementById("bmPopArea"),
+          price: document.getElementById("bmPopPrice"),
+          status: document.getElementById("bmPopStatus")
+        };
+
+        if (rowsEl) {
+          DATA.forEach(function (d, i) {
+            var b = document.createElement("button");
+            b.type = "button";
+            b.className = "bm-row";
+            b.setAttribute("aria-pressed", i === 1 ? "true" : "false");
+            b.dataset.i = i;
+            var top = document.createElement("span");
+            top.className = "bm-row-top";
+            var code = document.createElement("span");
+            code.className = "bm-row-code";
+            code.textContent = d.code;
+            var price = document.createElement("span");
+            price.className = "bm-row-price";
+            price.textContent = d.price;
+            top.appendChild(code);
+            top.appendChild(price);
+            var name = document.createElement("span");
+            name.className = "bm-row-name";
+            name.textContent = d.name;
+            b.appendChild(top);
+            b.appendChild(name);
+            rowsEl.appendChild(b);
+          });
+        }
+        var rows = Array.prototype.slice.call(root.querySelectorAll(".bm-row"));
+
+        var current = 1;
+
+        function select(i) {
+          var d = DATA[i], pin = pins[i];
+          if (!d || !pin || !pop) return;
+          current = i;
+          pins.forEach(function (p, k) { p.setAttribute("aria-pressed", k === i ? "true" : "false"); });
+          rows.forEach(function (r, k) { r.setAttribute("aria-pressed", k === i ? "true" : "false"); });
+          Object.keys(fields).forEach(function (k) { if (fields[k]) fields[k].textContent = d[k]; });
+          pop.style.left = pin.style.left;
+          pop.style.top = pin.style.top;
+          place();
+        }
+
+        /* Lật popup xuống dưới marker khi phía trên không đủ chỗ,
+           nếu không nó sẽ bị khung bản đồ cắt mất. */
+        function place() {
+          var canvas = pop.parentElement;
+          if (!canvas) return;
+          var pinTop = (parseFloat(pins[current].style.top) || 0) / 100 * canvas.clientHeight;
+          pop.classList.remove("bm-pop--below");
+          var needed = pop.offsetHeight + 30;
+          if (pinTop - needed < 6) pop.classList.add("bm-pop--below");
+        }
+
+        pins.forEach(function (p) { p.addEventListener("click", function () { select(+p.dataset.i); }); });
+        rows.forEach(function (r) { r.addEventListener("click", function () { select(+r.dataset.i); }); });
+        select(1);
+        window.addEventListener("resize", place);
+
+        var items = root.querySelectorAll("[data-reveal]");
+        if (!("IntersectionObserver" in window) ||
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          items.forEach(function (el) { el.classList.add("bm-in"); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add("bm-in"); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+        items.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
+    <script data-goatcounter="https://huongdm.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  </body>
+</html>

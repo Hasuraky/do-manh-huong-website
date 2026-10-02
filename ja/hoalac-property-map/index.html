@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/shared.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>ホアラック不動産マップ – DO MANH HUONG</title>
+    <link rel="icon" type="image/png" href="/image/icon-favicon.png" />
+    <link rel="apple-touch-icon" href="/image/icon-favicon.png" />
+    <meta name="description" content="ホアラック地区専用に作った、地理空間ベースの不動産在庫管理プラットフォーム。すべての物件が地図上のマーカーになります。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="DO MANH HUONG" />
+    <meta property="og:title" content="ホアラック不動産マップ – DO MANH HUONG" />
+    <meta property="og:description" content="ホアラック地区専用に作った、地理空間ベースの不動産在庫管理プラットフォーム。すべての物件が地図上のマーカーになります。" />
+    <meta property="og:url" content="https://huongdm.com/ja/hoalac-property-map/" />
+    <meta property="og:image" content="https://huongdm.com/image/Blog/1_Banner_2.jpg" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://huongdm.com/ja/hoalac-property-map/" />
+    <link rel="alternate" hreflang="en" href="https://huongdm.com/en/hoalac-property-map/" />
+    <link rel="alternate" hreflang="vi" href="https://huongdm.com/vi/hoalac-property-map/" />
+    <link rel="alternate" hreflang="ja" href="https://huongdm.com/ja/hoalac-property-map/" />
+    <link rel="alternate" hreflang="x-default" href="https://huongdm.com/en/hoalac-property-map/" />
+  </head>
+  <body class="hoalac-page">
+
+    <header class="site-header">
+      <div class="header-container">
+        <a href="/ja/blog/" class="brand">DO MANH HUONG</a>
+        <nav class="primary-nav" aria-label="Main navigation">
+          <a href="/ja/blog/" class="nav-item">Blog</a>
+          <a href="/ja/tomo/" class="nav-item">Tomo</a>
+          <a href="/ja/mangac/" class="nav-item">MangaC</a>
+          <a href="/ja/short-film/" class="nav-item">Short film "Doat Hon"</a>
+          <a href="/ja/akimitsu/" class="nav-item">Web Akimitsu</a>
+          <a href="/ja/hoalac-property-map/" class="nav-item active">Hoa Lac Map</a>
+          <a href="/ja/myself/" class="nav-item">Myself</a>
+        </nav>
+        <div class="lang-right">
+          <button class="hamburger" id="hamburger" aria-expanded="false" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+          <div class="lang-switch">
+            <button class="lang-btn" id="langToggle" type="button" aria-haspopup="true" aria-expanded="false">
+              JP <span class="arrow"></span>
+            </button>
+            <ul class="lang-menu" id="langMenu" role="menu" aria-labelledby="langToggle">
+              <li role="none"><a role="menuitem" href="/en/hoalac-property-map/">EN</a></li>
+              <li role="none"><a role="menuitem" href="/vi/hoalac-property-map/">VI</a></li>
+              <li role="none"><a role="menuitem" href="/ja/hoalac-property-map/">JP</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <nav class="mobile-nav" id="mobileMenu" aria-label="Mobile navigation">
+          <a href="/ja/blog/" class="nav-item">Blog</a>
+          <a href="/ja/tomo/" class="nav-item">Tomo</a>
+          <a href="/ja/mangac/" class="nav-item">MangaC</a>
+          <a href="/ja/short-film/" class="nav-item">Short film "Doat Hon"</a>
+          <a href="/ja/akimitsu/" class="nav-item">Web Akimitsu</a>
+          <a href="/ja/hoalac-property-map/" class="nav-item active">Hoa Lac Map</a>
+          <a href="/ja/myself/" class="nav-item">Myself</a>
+    </nav>
+
+    <main id="bdsmap-page">
+
+      <!-- ====================== HERO ====================== -->
+      <header class="bm-hero">
+        <div class="bm-wrap">
+          <div class="bm-coords">
+          <span>21.0128° N &nbsp;·&nbsp; 105.5215° E</span>
+          <span>ホアラック — タクタット、ハノイ</span>
+          <span>個人プロジェクト · 2026</span>
+          </div>
+
+          <h1>物件リストを、<em>実際の場所</em>に置く。</h1>
+
+          <p class="bm-hero-sub">ホアラック地区専用に作った、地理空間ベースの不動産の管理・検索システム。すべての物件がマーカーになり、ポップアップで概要を確認し、詳細ページを開き、地図上でそのまま検索・絞り込みができます。</p>
+
+          <p class="bm-hero-not">物件掲載サイト<b>ではありません</b>。Excelファイルとグループチャットを置き換えるツールで、地図そのものが管理画面です。</p>
+
+          <div class="bm-cta">
+            <a class="bm-btn bm-btn--primary" href="#demo">
+              仕組みを見る
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 8h8M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="bm-btn bm-btn--ghost" href="#lotrinh">5段階のロードマップ</a>
+          </div>
+
+          <dl class="bm-meta">
+          <div><dt>担当</dt><dd>プロダクト兼開発</dd></div>
+          <div><dt>フェーズ</dt><dd>1 — Proof of Concept</dd></div>
+          <div><dt>対象範囲</dt><dd>ホアラックのみ</dd></div>
+          <div><dt>最初の利用者</dt><dd>社内の営業担当</dd></div>
+          </dl>
+
+          <!-- ---------- map mockup ---------- -->
+          <div class="bm-demo" id="demo" data-reveal>
+            <div class="bm-frame">
+              <div class="bm-bar">
+                <div class="bm-dots"><i></i><i></i><i></i></div>
+                <div class="bm-search">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4.6" stroke="currentColor" stroke-width="1.5"/><path d="m10.6 10.6 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <span>区画コード、面積、価格で検索…</span>
+                </div>
+                <div class="bm-chips">
+              <span class="bm-chip bm-chip--on">すべて</span>
+              <span class="bm-chip">ヴィラ</span>
+              <span class="bm-chip">土地</span>
+                </div>
+              </div>
+
+              <div class="bm-stage">
+                <div class="bm-canvas" id="bmCanvas">
+                  <svg viewBox="0 0 800 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                    <defs>
+                      <pattern id="bmGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M40 0H0v40" fill="none" stroke="#D5E0D5" stroke-width="1"/>
+                      </pattern>
+                    </defs>
+                    <rect width="800" height="460" fill="#E9EFE9"/>
+                    <rect width="800" height="460" fill="url(#bmGrid)"/>
+                    <path d="M0 300 Q140 250 250 300 T520 330 L540 460 L0 460Z" fill="#DCE8D8"/>
+                    <circle cx="660" cy="110" r="95" fill="#DCE8D8"/>
+                    <path d="M-20 90 Q150 150 330 110 T800 160" stroke="#C3DBE4" stroke-width="22" fill="none" stroke-linecap="round"/>
+                    <path d="M-20 230 Q220 200 420 250 T820 240" stroke="#FFFFFF" stroke-width="16" fill="none"/>
+                    <path d="M-20 230 Q220 200 420 250 T820 240" stroke="#E8B04B" stroke-width="3" fill="none" stroke-dasharray="14 10"/>
+                    <path d="M300 -20 L340 480" stroke="#FFFFFF" stroke-width="11" fill="none"/>
+                    <path d="M560 -20 Q540 200 600 480" stroke="#FFFFFF" stroke-width="9" fill="none"/>
+                    <path d="M-20 380 L820 350" stroke="#FFFFFF" stroke-width="7" fill="none"/>
+                    <g fill="none" stroke="#B9C9B9" stroke-width="1.5">
+                      <rect x="80" y="280" width="62" height="48"/><rect x="142" y="280" width="62" height="48"/>
+                      <rect x="80" y="328" width="62" height="48"/><rect x="142" y="328" width="62" height="48"/>
+                      <rect x="620" y="270" width="70" height="54"/><rect x="690" y="270" width="70" height="54"/>
+                    </g>
+                    <text x="118" y="188" font-family="monospace" font-size="12" fill="#8FA695">タンロン大通り</text>
+                    <text x="596" y="92" font-family="monospace" font-size="12" fill="#8FA695">ホアラック ハイテクパーク</text>
+                  </svg>
+
+                <button class="bm-pin" type="button" data-i="0" data-kind="bt" style="left:21%;top:70%" aria-pressed="false" aria-label="XV-A12">
+                  <svg viewBox="0 0 26 34"><path class="bm-pin-body" d="M13 0C5.8 0 0 5.8 0 13c0 9.3 11.4 20 12 20.6.5.5 1.4.3 1.8-.2C14.6 33 26 22.3 26 13 26 5.8 20.2 0 13 0Z"/><circle cx="13" cy="13" r="4.6" fill="#fff"/></svg>
+                </button>
+                <button class="bm-pin" type="button" data-i="1" data-kind="bt" style="left:42%;top:46%" aria-pressed="true" aria-label="XV-B07">
+                  <svg viewBox="0 0 26 34"><path class="bm-pin-body" d="M13 0C5.8 0 0 5.8 0 13c0 9.3 11.4 20 12 20.6.5.5 1.4.3 1.8-.2C14.6 33 26 22.3 26 13 26 5.8 20.2 0 13 0Z"/><circle cx="13" cy="13" r="4.6" fill="#fff"/></svg>
+                </button>
+                <button class="bm-pin" type="button" data-i="2" data-kind="dat" style="left:63%;top:76%" aria-pressed="false" aria-label="TH-114">
+                  <svg viewBox="0 0 26 34"><path class="bm-pin-body" d="M13 0C5.8 0 0 5.8 0 13c0 9.3 11.4 20 12 20.6.5.5 1.4.3 1.8-.2C14.6 33 26 22.3 26 13 26 5.8 20.2 0 13 0Z"/><circle cx="13" cy="13" r="4.6" fill="#fff"/></svg>
+                </button>
+                <button class="bm-pin" type="button" data-i="3" data-kind="dat" style="left:82%;top:38%" aria-pressed="false" aria-label="TX-208">
+                  <svg viewBox="0 0 26 34"><path class="bm-pin-body" d="M13 0C5.8 0 0 5.8 0 13c0 9.3 11.4 20 12 20.6.5.5 1.4.3 1.8-.2C14.6 33 26 22.3 26 13 26 5.8 20.2 0 13 0Z"/><circle cx="13" cy="13" r="4.6" fill="#fff"/></svg>
+                </button>
+                <button class="bm-pin" type="button" data-i="4" data-kind="bt" style="left:33%;top:24%" aria-pressed="false" aria-label="XV-C03">
+                  <svg viewBox="0 0 26 34"><path class="bm-pin-body" d="M13 0C5.8 0 0 5.8 0 13c0 9.3 11.4 20 12 20.6.5.5 1.4.3 1.8-.2C14.6 33 26 22.3 26 13 26 5.8 20.2 0 13 0Z"/><circle cx="13" cy="13" r="4.6" fill="#fff"/></svg>
+                </button>
+
+                  <div class="bm-pop" id="bmPop" style="left:42%;top:46%">
+                    <div class="bm-pop-code" id="bmPopCode">XV-B07</div>
+                    <h4 id="bmPopName">二戸一ヴィラ、南東向き</h4>
+                    <dl>
+                    <dt>面積</dt><dd id="bmPopArea">180 m²</dd>
+                    <dt>価格</dt><dd id="bmPopPrice">128億ドン</dd>
+                    <dt>ステータス</dt><dd id="bmPopStatus">販売中</dd>
+                    </dl>
+                    <span class="bm-pop-link">詳細ページを開く →</span>
+                  </div>
+                </div>
+
+                <div class="bm-list">
+                  <div class="bm-list-head">物件リスト · 5 / 128</div>
+                  <div id="bmRows"></div>
+                </div>
+              </div>
+
+              <div class="bm-foot">
+                <span>128件 · 1エリア · 2026.10.02 更新</span>
+                <span>ホアラック</span>
+              </div>
+            </div>
+            <p class="bm-demo-note">操作イメージ — サンプルデータ</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- ====================== PROBLEM ====================== -->
+      <section class="bm-sec" style="padding-top:140px">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">課題</span>
+            <h2>物件リストが、必要な場所以外のあらゆる場所に散らばっている</h2>
+            <p class="bm-lead">ホアラックの営業担当は今、物件情報をExcel、Zalo、グループチャットで管理しています。その結果、最も重要な顧客対応の時間が削られています。</p>
+          </div>
+
+          <ul class="bm-prob" data-reveal>
+            <li><span class="bm-num">01</span><div><strong>データの分散</strong><p>物件リストが複数のファイル、複数のチャット、複数の端末に分かれています。</p></div></li>
+            <li><span class="bm-num">02</span><div><strong>重複の繰り返し</strong><p>同じ区画が複数のリストに、食い違った情報で載っています。</p></div></li>
+            <li><span class="bm-num">03</span><div><strong>目当ての物件が探しにくい</strong><p>顧客の希望に合わせたExcelでの絞り込みは遅く、見落としも起きます。</p></div></li>
+            <li><span class="bm-num">04</span><div><strong>位置が思い描けない</strong><p>座標は担当者の頭の中にあり、データの中にはありません。</p></div></li>
+            <li><span class="bm-num">05</span><div><strong>共有しても伝わらない</strong><p>Excelの一行を送っても「それはどこ？」には答えられません。</p></div></li>
+            <li><span class="bm-num">06</span><div><strong>人ごとに別のリスト</strong><p>共通のデータ源がなく、同期はほぼ手作業です。</p></div></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ====================== SOLUTION ====================== -->
+      <section class="bm-sec bm-sec--tight">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">解決策</span>
+            <h2>管理画面を表計算から地図へ</h2>
+            <p class="bm-lead">すべての物件が実際の位置に表示されます。地図は付属機能ではなく、作業の中心となる画面です。</p>
+          </div>
+
+          <div class="bm-switch" data-reveal>
+            <div class="bm-card bm-card--bad">
+              <h3>以前 · Excel と Zalo</h3>
+              <ul>
+                <li>位置は記憶に頼って読む</li>
+                <li>スクロールと Ctrl+F で絞り込む</li>
+                <li>担当者ごとに別のコピー</li>
+                <li>顧客が自分で位置を想像する</li>
+              </ul>
+            </div>
+            <div class="bm-arrow">→</div>
+            <div class="bm-card bm-card--good">
+              <h3>以後 · インタラクティブな地図</h3>
+              <ul>
+                <li>物件の分布がひと目で分かる</li>
+                <li>地図上でそのまま検索・絞り込み</li>
+                <li>ひとつの共通リスト</li>
+                <li>ポップアップで場所と周辺が分かる</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================== FLOW ====================== -->
+      <section class="bm-sec bm-sec--tight">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">利用の流れ · フェーズ1</span>
+            <h2>四つの手順、説明書は不要</h2>
+            <p class="bm-lead">利用者は営業の人で、ITに詳しいわけではありません。どの操作もExcelを開くより速くある必要があります。</p>
+          </div>
+
+          <div class="bm-flow" data-reveal>
+            <article class="bm-step"><div class="bm-step-k">01</div><h3>マーカー</h3><p>各物件が実際の座標に置かれた点になり、種別ごとに色分けされます。</p></article>
+            <article class="bm-step"><div class="bm-step-k">02</div><h3>ポップアップ</h3><p>マーカーに触れると、区画コード、面積、価格、ステータスがすぐ分かります。</p></article>
+            <article class="bm-step"><div class="bm-step-k">03</div><h3>詳細ページ</h3><p>物件の情報、写真、メモをすべて開いて確認できます。</p></article>
+            <article class="bm-step"><div class="bm-step-k">04</div><h3>検索・絞り込み</h3><p>顧客の希望に合わせて地図上で絞り込み、結果がその場で狭まります。</p></article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================== USERS ====================== -->
+      <section class="bm-sec bm-sec--tight">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">利用対象</span>
+            <h2>まず社内、次にエコシステム</h2>
+          </div>
+          <div class="bm-users" data-reveal>
+            <div>
+              <span class="bm-tag bm-tag--now">初期フェーズ</span>
+              <ul>
+                <li>不動産会社の社内</li>
+                <li>営業担当</li>
+                <li>営業チームリーダー</li>
+              </ul>
+            </div>
+            <div>
+              <span class="bm-tag bm-tag--next">以後のフェーズ</span>
+              <ul>
+                <li>パートナー</li>
+                <li>他の仲介会社</li>
+                <li>投資家</li>
+                <li>顧客</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================== ROADMAP ====================== -->
+      <section class="bm-sec bm-road" id="lotrinh">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">ロードマップ</span>
+            <h2>五つのフェーズ、それぞれが次を正当化する</h2>
+            <p class="bm-lead">現在のフェーズが終わらないうちに、次のフェーズの機能は作りません。</p>
+          </div>
+
+          <ol class="bm-rail" data-reveal>
+            <li class="bm-phase bm-phase--now">
+              <div class="bm-dot">1</div>
+              <div class="bm-phase-head"><h3>Proof of Concept</h3><span class="bm-badge">進行中</span></div>
+              <p class="bm-goal">目標： <b>アイデアを検証する。</b></p>
+              <div class="bm-tags"><span>地図の表示</span><span>マーカー</span><span>ポップアップ</span><span>詳細ページ</span></div>
+            </li>
+            <li class="bm-phase">
+              <div class="bm-dot">2</div>
+              <div class="bm-phase-head"><h3>MVP</h3><span class="bm-badge">次</span></div>
+              <p class="bm-goal">目標： <b>社内で実際に使う。</b></p>
+              <div class="bm-tags"><span>ログイン</span><span>物件リスト管理</span><span>データ更新</span><span>データ取り込み</span><span>画像管理</span></div>
+            </li>
+            <li class="bm-phase">
+              <div class="bm-dot">3</div>
+              <div class="bm-phase-head"><h3>Pilot</h3><span class="bm-badge">予定</span></div>
+              <p class="bm-goal">目標： <b>効果を実証する。</b></p>
+              <div class="bm-tags"><span>実運用</span><span>フィードバック収集</span><span>体験の改善</span><span>データの標準化</span></div>
+            </li>
+            <li class="bm-phase">
+              <div class="bm-dot">4</div>
+              <div class="bm-phase-head"><h3>Multi-company Platform</h3><span class="bm-badge">予定</span></div>
+              <p class="bm-goal">目標： <b>エコシステムを形づくる。</b></p>
+              <div class="bm-tags"><span>複数企業</span><span>権限管理</span><span>個別データ</span><span>リストの共有</span></div>
+            </li>
+            <li class="bm-phase">
+              <div class="bm-dot">5</div>
+              <div class="bm-phase-head"><h3>Hoa Lac Property Ecosystem</h3><span class="bm-badge">ビジョン</span></div>
+              <p class="bm-goal">目標： <b>ホアラックに特化した不動産データ基盤。</b></p>
+              <div class="bm-tags"><span>価格データ</span><span>取引履歴</span><span>統計</span><span>市場分析</span><span>AIによる提案支援</span></div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ====================== PHILOSOPHY ====================== -->
+      <section class="bm-sec">
+        <div class="bm-wrap">
+          <div class="bm-quote" data-reveal>
+            <blockquote>横に広げるのではなく、<em>深く</em>掘る。</blockquote>
+            <p>ベトナム全土向けの不動産プラットフォームを目指しません。ホアラックのためだけの、最良のデータ基盤になることにすべての力を注ぎます。</p>
+          </div>
+
+          <ul class="bm-rules" data-reveal>
+            <li><b>まず最小で価値のあるものを</b><span>最小限でも、実際に使える版から始めます。</span></li>
+            <li><b>本当に必要なときだけ作る</b><span>機能は今ある問題を解くためのもので、想像上の問題のためではありません。</span></li>
+            <li><b>拡張できる設計</b><span>まだ導入していなくても、スキーマは複数企業を前提に設計します。</span></li>
+            <li><b>データは資産</b><span>拡大よりも先に、正確さ、重複排除、標準化を優先します。</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ====================== SUCCESS ====================== -->
+      <section class="bm-sec bm-sec--tight">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">成功の定義</span>
+            <h2>あらゆる判断を測る四つの問い</h2>
+          </div>
+          <ul class="bm-success" data-reveal>
+            <li><b>速さ</b><span>営業担当がExcelより速く物件を見つけられるか。</span></li>
+            <li><b>分かりやすさ</b><span>説明しなくても顧客が位置を思い描けるか。</span></li>
+            <li><b>一元化</b><span>物件リストが一か所にあり、重複したコピーがないか。</span></li>
+            <li><b>拡張性</b><span>複数企業の基盤になる準備ができているか。</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ====================== STACK ====================== -->
+      <section class="bm-sec bm-sec--tight">
+        <div class="bm-wrap">
+          <div class="bm-sec-head" data-reveal>
+            <span class="bm-legend">技術</span>
+            <h2>Stack</h2>
+            <p class="bm-lead">一般的で保守しやすく、複数企業対応まで広げられる構成を優先しました。</p>
+          </div>
+          <dl class="bm-stack" data-reveal>
+            <div><dt>フロントエンド</dt><dd><span>Next.js</span><span>TypeScript</span><span>Tailwind</span></dd></div>
+            <div><dt>地図</dt><dd><span>Leaflet</span><span>OpenStreetMap</span><span>GeoJSON</span></dd></div>
+            <div><dt>データ</dt><dd><span>PostgreSQL</span><span>PostGIS</span></dd></div>
+            <div><dt>インフラ</dt><dd><span>Vercel</span><span>Object storage</span></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ====================== END ====================== -->
+      <section class="bm-sec bm-end">
+        <div class="bm-wrap">
+          <span class="bm-legend" data-reveal>お問い合わせ</span>
+          <h2 data-reveal>稼働中の版を見たい、プロジェクトについて話したい方へ</h2>
+          <p data-reveal>本プロジェクトは Proof of Concept 段階で、開発を続けています。デモもご意見も歓迎です。</p>
+          <div class="bm-cta" data-reveal>
+            <a class="bm-btn bm-btn--primary" href="mailto:dragon20011511@gmail.com">メールを送る</a>
+            <a class="bm-btn bm-btn--ghost" href="/ja/myself/">← 紹介ページへ戻る</a>
+          </div>
+          <div class="bm-end-meta">
+            <span>ホアラック不動産マップ システム</span>
+            <span>21.0128° N · 105.5215° E</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <hr class="footer__divider" />
+    <footer class="site-footer">
+      <div class="footer__inner">
+        <p class="footer__credit">© ハス 2025 | Designed &amp; Built by H.</p>
+        <p class="footer__language">Language:
+          <a href="/vi/hoalac-property-map/" class="footer__lang-link">[VI]</a>
+          <a href="/en/hoalac-property-map/" class="footer__lang-link">[EN]</a>
+          <a href="/ja/hoalac-property-map/" class="footer__lang-link">[JP]</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="/shared.js" defer></script>
+    <script>
+      (function () {
+        var root = document.getElementById("bdsmap-page");
+        if (!root) return;
+
+        var DATA = [
+      { code:"XV-A12", name:"一戸建てヴィラ、敷地内の湖ビュー", area:"240 m²", price:"185億ドン", status:"販売中" },
+      { code:"XV-B07", name:"二戸一ヴィラ、南東向き", area:"180 m²", price:"128億ドン", status:"販売中" },
+      { code:"TH-114", name:"幅11m道路沿いの土地、タックホア", area:"100 m²", price:"42億ドン", status:"手付済み" },
+      { code:"TX-208", name:"ハイテクパーク近くの宅地、タンサー", area:"320 m²", price:"96億ドン", status:"販売中" },
+      { code:"XV-C03", name:"角地ヴィラ、二面開口", area:"265 m²", price:"210億ドン", status:"仮押さえ" }
+        ];
+
+        var pins = Array.prototype.slice.call(root.querySelectorAll(".bm-pin"));
+        var pop = document.getElementById("bmPop");
+        var rowsEl = document.getElementById("bmRows");
+        var fields = {
+          code: document.getElementById("bmPopCode"),
+          name: document.getElementById("bmPopName"),
+          area: document.getElementById("bmPopArea"),
+          price: document.getElementById("bmPopPrice"),
+          status: document.getElementById("bmPopStatus")
+        };
+
+        if (rowsEl) {
+          DATA.forEach(function (d, i) {
+            var b = document.createElement("button");
+            b.type = "button";
+            b.className = "bm-row";
+            b.setAttribute("aria-pressed", i === 1 ? "true" : "false");
+            b.dataset.i = i;
+            var top = document.createElement("span");
+            top.className = "bm-row-top";
+            var code = document.createElement("span");
+            code.className = "bm-row-code";
+            code.textContent = d.code;
+            var price = document.createElement("span");
+            price.className = "bm-row-price";
+            price.textContent = d.price;
+            top.appendChild(code);
+            top.appendChild(price);
+            var name = document.createElement("span");
+            name.className = "bm-row-name";
+            name.textContent = d.name;
+            b.appendChild(top);
+            b.appendChild(name);
+            rowsEl.appendChild(b);
+          });
+        }
+        var rows = Array.prototype.slice.call(root.querySelectorAll(".bm-row"));
+
+        var current = 1;
+
+        function select(i) {
+          var d = DATA[i], pin = pins[i];
+          if (!d || !pin || !pop) return;
+          current = i;
+          pins.forEach(function (p, k) { p.setAttribute("aria-pressed", k === i ? "true" : "false"); });
+          rows.forEach(function (r, k) { r.setAttribute("aria-pressed", k === i ? "true" : "false"); });
+          Object.keys(fields).forEach(function (k) { if (fields[k]) fields[k].textContent = d[k]; });
+          pop.style.left = pin.style.left;
+          pop.style.top = pin.style.top;
+          place();
+        }
+
+        /* Lật popup xuống dưới marker khi phía trên không đủ chỗ,
+           nếu không nó sẽ bị khung bản đồ cắt mất. */
+        function place() {
+          var canvas = pop.parentElement;
+          if (!canvas) return;
+          var pinTop = (parseFloat(pins[current].style.top) || 0) / 100 * canvas.clientHeight;
+          pop.classList.remove("bm-pop--below");
+          var needed = pop.offsetHeight + 30;
+          if (pinTop - needed < 6) pop.classList.add("bm-pop--below");
+        }
+
+        pins.forEach(function (p) { p.addEventListener("click", function () { select(+p.dataset.i); }); });
+        rows.forEach(function (r) { r.addEventListener("click", function () { select(+r.dataset.i); }); });
+        select(1);
+        window.addEventListener("resize", place);
+
+        var items = root.querySelectorAll("[data-reveal]");
+        if (!("IntersectionObserver" in window) ||
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          items.forEach(function (el) { el.classList.add("bm-in"); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add("bm-in"); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+        items.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
+    <script data-goatcounter="https://huongdm.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  </body>
+</html>

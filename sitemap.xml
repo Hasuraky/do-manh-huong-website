@@ -106,6 +106,27 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://huongdm.com/en/akimitsu/"/>
   </url>
   <url>
+    <loc>https://huongdm.com/en/hoalac-property-map/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://huongdm.com/en/hoalac-property-map/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://huongdm.com/vi/hoalac-property-map/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huongdm.com/ja/hoalac-property-map/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://huongdm.com/en/hoalac-property-map/"/>
+  </url>
+  <url>
+    <loc>https://huongdm.com/vi/hoalac-property-map/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://huongdm.com/en/hoalac-property-map/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://huongdm.com/vi/hoalac-property-map/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huongdm.com/ja/hoalac-property-map/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://huongdm.com/en/hoalac-property-map/"/>
+  </url>
+  <url>
+    <loc>https://huongdm.com/ja/hoalac-property-map/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://huongdm.com/en/hoalac-property-map/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://huongdm.com/vi/hoalac-property-map/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://huongdm.com/ja/hoalac-property-map/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://huongdm.com/en/hoalac-property-map/"/>
+  </url>
+  <url>
     <loc>https://huongdm.com/en/myself/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://huongdm.com/en/myself/"/>
     <xhtml:link rel="alternate" hreflang="vi" href="https://huongdm.com/vi/myself/"/>
